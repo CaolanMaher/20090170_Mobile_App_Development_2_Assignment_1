@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">20090170_Mobile_App_2_Assignment_1</string>
+    <string name="test">TEST</string>
+    <string name="action_campaign">Campaign</string>
 </resources>
