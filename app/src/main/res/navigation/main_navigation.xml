@@ -51,4 +51,9 @@
             android:name="donationid"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/campaignFragment"
+        android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign.CampaignFragment"
+        android:label="fragment_campaign"
+        tools:layout="@layout/fragment_campaign" />
 </navigation>

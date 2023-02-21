@@ -1,0 +1,42 @@
+package ie.wit.a20090170_mobile_app_2_assignment_1.adapters
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import ie.wit.a20090170_mobile_app_2_assignment_1.R
+import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.CardQuestBinding
+import ie.wit.a20090170_mobile_app_2_assignment_1.models.DonationModel
+import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
+
+interface QuestClickListener {
+    fun onQuestClick(quest: QuestModel)
+}
+
+class QuestAdapter constructor(private var quests: List<QuestModel>,
+                                  private val listener: QuestClickListener)
+    : RecyclerView.Adapter<QuestAdapter.MainHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
+        val binding = CardQuestBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+
+        return MainHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: MainHolder, position: Int) {
+        val quest = quests[holder.adapterPosition]
+        holder.bind(quest,listener)
+    }
+
+    override fun getItemCount(): Int = quests.size
+
+    inner class MainHolder(val binding : CardQuestBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(quest: QuestModel, listener: QuestClickListener) {
+            binding.quest = quest
+            binding.imageIcon.setImageResource(R.mipmap.ic_launcher_round)
+            binding.root.setOnClickListener { listener.onQuestClick(quest) }
+            binding.executePendingBindings()
+        }
+    }
+}

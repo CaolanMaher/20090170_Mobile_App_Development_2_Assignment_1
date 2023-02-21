@@ -37,6 +37,11 @@
     <string name="message">Message :</string>
     <string name="upvotes">UpVotes :</string>
 
+    <!-- -->
+
+    <string name="questsNotFound">No Quests Yet...\n Get Started With One!</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
