@@ -40,6 +40,23 @@
     <!-- -->
 
     <string name="questsNotFound">No Quests Yet...\n Get Started With One!</string>
+    <string name="questError">Error : Couldn\'t Make The Quest</string>
+    <string name="questTitle">Welcome User</string>
+    <string name="questSubtitle">Please make your quest here</string>
+    <string name="questName">Quest Name</string>
+    <string name="questDescription">Description</string>
+    <string name="questLocationName">Location Name</string>
+    <string name="questRewardAmount">Reward Amount</string>
+    <string name="questComplete">Quest Is Completed?</string>
+
+    <string name="questButton">Make Quest</string>
+    <string name="TotalQuestsCompleted">Quests Completed So Far</string>
+    <string name="enterRewardAmount">Enter Reward Amount</string>
+
+    <string name="totalQuestsCompletedNumber">${%d}</string>
+
+    <string name="actionQuest">Quests</string>
+    <string name="actionCampaign">Campaign</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
