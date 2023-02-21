@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/campaignFragment">
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.about.AboutFragment"
+        android:label="@string/action_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/donationDetailFragment"
+        android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.detail.DonationDetailFragment"
+        android:label="fragment_donation_detail"
+        tools:layout="@layout/fragment_donation_detail" >
+        <action
+            android:id="@+id/action_donationDetailFragment_to_reportFragment"
+            app:destination="@id/reportFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <argument
+            android:name="donationid"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/campaignFragment"
+        android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign.CampaignFragment"
+        android:label="fragment_campaign"
+        tools:layout="@layout/fragment_campaign" />
+
+    <fragment
+        android:id="@+id/questFragment"
+        android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.quest.QuestFragment"
+        android:label="fragment_quest"
+        tools:layout="@layout/fragment_quest" />
+</navigation>
