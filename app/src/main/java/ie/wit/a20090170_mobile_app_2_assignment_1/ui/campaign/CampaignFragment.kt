@@ -77,8 +77,8 @@ class CampaignFragment : Fragment(), QuestClickListener {
 
     override fun onQuestClick(quest: QuestModel) {
         //val action = ReportFragmentDirections.actionReportFragmentToDonationDetailFragment(donation.id)
-        //val action = CampaignFragmentDirections.actionQuestFragmentToQuestDetailFragment(donation.id)
-        //findNavController().navigate(action)
+        val action = CampaignFragmentDirections.actionCampaignFragmentToQuestDetailFragment(quest.id)
+        findNavController().navigate(action)
     }
 
     override fun onResume() {
