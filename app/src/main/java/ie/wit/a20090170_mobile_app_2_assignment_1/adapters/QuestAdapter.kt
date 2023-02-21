@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.CardQuestBinding
-import ie.wit.a20090170_mobile_app_2_assignment_1.models.DonationModel
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
 
 interface QuestClickListener {

@@ -11,14 +11,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
-import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentDonateBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentQuestBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.main.DonationXApp
-import ie.wit.a20090170_mobile_app_2_assignment_1.models.DonationModel
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
 import ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign.CampaignViewModel
 import ie.wit.a20090170_mobile_app_2_assignment_1.ui.quest.QuestViewModel
-import ie.wit.a20090170_mobile_app_2_assignment_1.ui.report.ReportViewModel
 
 class QuestFragment : Fragment() {
 
@@ -43,7 +40,6 @@ class QuestFragment : Fragment() {
                 status -> status?.let { render(status) }
         })
 
-
         //fragBinding.progressBar.max = 10000
         fragBinding.rewardAmountPicker.minValue = 1
         fragBinding.rewardAmountPicker.maxValue = 1000
@@ -54,7 +50,7 @@ class QuestFragment : Fragment() {
         }
         setButtonListener(fragBinding)
 
-        return root;
+        return root
     }
 
     private fun render(status: Boolean) {
@@ -107,6 +103,12 @@ class QuestFragment : Fragment() {
                 if(quest.isCompleted) {
                     totalQuestsCompleted++
                 }
+            }
+            if(quests.isNotEmpty()) {
+                fragBinding.progressBar.max = quests.size - 1
+            }
+            else {
+                fragBinding.progressBar.max = 1
             }
             fragBinding.progressBar.progress = totalQuestsCompleted
             fragBinding.totalQuestsCompleted.text = getString(R.string.total_donated,totalQuestsCompleted)

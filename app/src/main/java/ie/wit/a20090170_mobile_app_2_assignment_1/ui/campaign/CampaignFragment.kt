@@ -11,14 +11,10 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
-import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.DonationAdapter
-import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.DonationClickListener
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestAdapter
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestClickListener
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentCampaignBinding
-import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentReportBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.main.DonationXApp
-import ie.wit.a20090170_mobile_app_2_assignment_1.models.DonationModel
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
 
 class CampaignFragment : Fragment(), QuestClickListener {
