@@ -27,6 +27,12 @@ object QuestManager : QuestStore {
         logAll()
     }
 
+    override fun update(quest: QuestModel) {
+        val oldQuest : QuestModel? = quests.find { it.id == quest.id }
+        quests.remove(oldQuest)
+        quests.add(quest)
+    }
+
     private fun logAll() {
         Timber.v("** Quests List **")
         quests.forEach { Timber.v("Quest $it") }

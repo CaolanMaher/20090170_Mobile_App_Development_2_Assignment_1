@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentQuestBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.main.DonationXApp
+import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestManager
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
 import ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign.CampaignViewModel
 import ie.wit.a20090170_mobile_app_2_assignment_1.ui.quest.QuestViewModel
@@ -40,7 +41,14 @@ class QuestFragment : Fragment() {
                 status -> status?.let { render(status) }
         })
 
-        //fragBinding.progressBar.max = 10000
+        val quests = QuestManager.findAll()
+
+        if(quests.isNotEmpty()) {
+            fragBinding.progressBar.max = quests.size
+        }
+        else {
+            fragBinding.progressBar.max = 1
+        }
         fragBinding.rewardAmountPicker.minValue = 1
         fragBinding.rewardAmountPicker.maxValue = 1000
 
@@ -75,9 +83,11 @@ class QuestFragment : Fragment() {
                 layout.editQuestLocationName.text.toString() else "N/A"
             val questDescription = if(layout.editQuestDescription.text.isNotEmpty())
                 layout.editQuestDescription.text.toString() else "N/A"
-            if(totalQuestsCompleted >= layout.progressBar.max)
-                Toast.makeText(context,"Donate Amount Exceeded!", Toast.LENGTH_LONG).show()
-            else {
+
+            layout.progressBar.max++
+            //if(totalQuestsCompleted >= layout.progressBar.max)
+            //    Toast.makeText(context,"Donate Amount Exceeded!", Toast.LENGTH_LONG).show()
+            //else {
                 //val paymentmethod = if(layout.paymentMethod.checkedRadioButtonId == R.id.Direct) "Direct" else "Paypal"
                 val questComplete = layout.questCompleteBox.isChecked
                 if(questComplete) {
@@ -88,7 +98,7 @@ class QuestFragment : Fragment() {
 
                 val quest = QuestModel(0, questName, questDescription, questLocationName, rewardAmount, questComplete)
                 questViewModel.addQuest(quest)
-            }
+            //}
         }
     }
 
@@ -105,7 +115,7 @@ class QuestFragment : Fragment() {
                 }
             }
             if(quests.isNotEmpty()) {
-                fragBinding.progressBar.max = quests.size - 1
+                fragBinding.progressBar.max = quests.size
             }
             else {
                 fragBinding.progressBar.max = 1

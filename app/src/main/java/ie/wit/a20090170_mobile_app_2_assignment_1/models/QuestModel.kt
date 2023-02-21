@@ -6,9 +6,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class QuestModel (
     var id: Long = 0,
-    val name : String = "N/A",
-    val description : String = "N/A",
-    val locationName : String = "N/A",
-    val reward : Int = 0,
-    val isCompleted : Boolean = false
+    var name : String = "N/A",
+    var description : String = "N/A",
+    var locationName : String = "N/A",
+    var reward : Int = 0,
+    var isCompleted : Boolean = false
 ) : Parcelable

@@ -4,4 +4,5 @@ interface QuestStore {
     fun findAll() : List<QuestModel>
     fun findById(id : Long) : QuestModel?
     fun create(quest : QuestModel)
+    fun update(quest : QuestModel)
 }
