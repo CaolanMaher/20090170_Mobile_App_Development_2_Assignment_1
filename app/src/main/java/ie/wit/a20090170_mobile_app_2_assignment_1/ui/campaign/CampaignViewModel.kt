@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestManager
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
+import timber.log.Timber
 
 class CampaignViewModel : ViewModel() {
 
@@ -23,7 +24,9 @@ class CampaignViewModel : ViewModel() {
     }
 
     fun load() {
+        Timber.v("FETCHING DATA")
         questsList.value = QuestManager.findAll()
+        //questsList.value = QuestManager.getAllFromDatabase()
     }
 
     fun searchByQuestName(name : String) {

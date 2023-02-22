@@ -7,4 +7,9 @@ interface QuestStore {
     fun update(quest : QuestModel)
     fun delete(id : Long)
     fun searchByQuestName(name : String) : List<QuestModel>
+    fun getAllFromDatabase()
+    fun addToDatabase(quest : QuestModel)
+    fun deleteFromDatabase(id : Long)
+    fun updateInDatabase(quest : QuestModel)
+    fun getLatestID()
 }
