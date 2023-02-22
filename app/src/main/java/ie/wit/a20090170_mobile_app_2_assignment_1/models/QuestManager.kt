@@ -33,6 +33,23 @@ object QuestManager : QuestStore {
         quests.add(quest)
     }
 
+    override fun delete(id: Long) {
+        val foundQuest : QuestModel? = quests.find { it.id == id }
+        quests.remove(foundQuest)
+    }
+
+    override fun searchByQuestName(name: String): List<QuestModel> {
+        val foundQuests = ArrayList<QuestModel>()
+
+        for(quest in quests) {
+            if(quest.name.contains(name)) {
+                foundQuests.add(quest)
+            }
+        }
+
+        return foundQuests
+    }
+
     private fun logAll() {
         Timber.v("** Quests List **")
         quests.forEach { Timber.v("Quest $it") }

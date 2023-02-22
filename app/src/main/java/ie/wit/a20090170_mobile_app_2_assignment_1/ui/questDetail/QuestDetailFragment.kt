@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentQuestBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentQuestDetailBinding
@@ -53,6 +55,8 @@ class QuestDetailFragment : Fragment() {
 
         quest = QuestManager.findById(args.questID)!!
 
+        fragBinding.editQuestID.text = quest.id.toString()
+
         fragBinding.editQuestNameDetail.setText(quest.name)
         fragBinding.editQuestLocationNameDetail.setText(quest.locationName)
         fragBinding.editQuestDescriptionDetail.setText(quest.description)
@@ -73,7 +77,7 @@ class QuestDetailFragment : Fragment() {
             true -> {
                 view?.let {
                     //Uncomment this if you want to immediately return to Report
-                    //findNavController().popBackStack()
+                    findNavController().popBackStack()
                 }
             }
             false -> Toast.makeText(context,getString(R.string.questUpdateError),Toast.LENGTH_LONG).show()
@@ -99,6 +103,10 @@ class QuestDetailFragment : Fragment() {
             quest.isCompleted = newQuestComplete
 
             questDetailViewModel.updateQuest(quest)
+        }
+
+        layout.deleteQuestButton.setOnClickListener {
+            questDetailViewModel.deleteQuest(quest.id)
         }
 
         /*

@@ -6,18 +6,16 @@
     android:id="@+id/reportFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.report.ReportFragment">
+    tools:context=".ui.campaign.CampaignFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/questsRecyclerView"
-        android:layout_width="401dp"
-        android:layout_height="658dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="387dp"
+        android:layout_height="554dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/searchByQuestNameText" />
 
     <TextView
         android:id="@+id/questsNotFound"
@@ -42,5 +40,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add"
         android:contentDescription="TODO" />
+
+    <TextView
+        android:id="@+id/searchForQuestView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/searchByQuestName"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/searchByQuestNameText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/questName"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchForQuestView" />
+
+    <ImageButton
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/color_primary"
+        android:src="@android:drawable/ic_menu_search"
+        app:layout_constraintEnd_toStartOf="@+id/cancelSearchButton"
+        app:layout_constraintStart_toEndOf="@+id/searchByQuestNameText"
+        app:layout_constraintTop_toBottomOf="@+id/searchForQuestView" />
+
+    <ImageButton
+        android:id="@+id/cancelSearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="36dp"
+        android:backgroundTint="@color/color_primary"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchForQuestView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

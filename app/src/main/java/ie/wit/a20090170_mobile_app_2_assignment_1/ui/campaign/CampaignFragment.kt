@@ -44,6 +44,19 @@ class CampaignFragment : Fragment(), QuestClickListener {
             quests?.let { render(quests) }
         })
 
+        val searchButton = fragBinding.searchButton
+        searchButton.setOnClickListener {
+            val questNameToSearchFor = fragBinding.searchByQuestNameText.text.toString()
+            campaignViewModel.searchByQuestName(questNameToSearchFor)
+            //updateView()
+        }
+
+        val cancelSearchButton = fragBinding.cancelSearchButton
+        cancelSearchButton.setOnClickListener {
+            fragBinding.searchByQuestNameText.setText("")
+            campaignViewModel.load()
+        }
+
         /*
         val fab: FloatingActionButton = fragBinding.fab
         fab.setOnClickListener {

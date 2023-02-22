@@ -21,4 +21,13 @@ class QuestDetailViewModel : ViewModel() {
             false
         }
     }
+
+    fun deleteQuest(id : Long) {
+        status.value = try {
+            QuestManager.delete(id)
+            true
+        } catch (e: IllegalArgumentException) {
+            false
+        }
+    }
 }
