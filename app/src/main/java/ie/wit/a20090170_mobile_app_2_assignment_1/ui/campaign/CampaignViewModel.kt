@@ -8,7 +8,12 @@ import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
 
 class CampaignViewModel : ViewModel() {
 
+    private val status = MutableLiveData<Boolean>()
+
     private val questsList = MutableLiveData<List<QuestModel>>()
+
+    val observableStatus: LiveData<Boolean>
+        get() = status
 
     val observableQuestsList: LiveData<List<QuestModel>>
         get() = questsList
@@ -19,5 +24,9 @@ class CampaignViewModel : ViewModel() {
 
     fun load() {
         questsList.value = QuestManager.findAll()
+    }
+
+    fun searchByQuestName(name : String) {
+        questsList.value = QuestManager.searchByQuestName(name)
     }
 }

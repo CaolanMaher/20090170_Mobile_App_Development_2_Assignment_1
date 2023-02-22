@@ -58,6 +58,14 @@
     <string name="actionQuest">Quests</string>
     <string name="actionCampaign">Campaign</string>
 
+    <string name="searchByQuestName">Search By Name :</string>
+
+    <string name="editQuestTitle">Currently Editing Quest ID :</string>
+    <string name="editQuestID">0</string>
+    <string name="updateButton">Update</string>
+    <string name="deleteButton">Delete</string>
+    <string name="questUpdateError">Error : Couldn\'t Update The Quest</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

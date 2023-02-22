@@ -41,7 +41,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_toEndOf="@+id/imageIcon"
                 android:textSize="24sp"
-                android:text="@{quest.locationName}"
+                android:text="@{quest.name}"
                 />
 
             <TextView
