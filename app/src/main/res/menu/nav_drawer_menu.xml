@@ -5,16 +5,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/questFragment"
-            android:icon="@drawable/ic_menu_aboutus"
+            android:icon="@drawable/ic_menu_quest"
             android:title="@string/actionQuest" />
         <item
             android:id="@+id/campaignFragment"
-            android:icon="@drawable/ic_menu_report"
+            android:icon="@drawable/ic_menu_campaign"
             android:title="@string/actionCampaign" />
         <item
             android:id="@+id/aboutFragment"
             android:icon="@drawable/ic_menu_aboutus"
-            android:title="@string/action_about" />
+            android:title="@string/actionAboutUs" />
     </group>
     <item android:title="@string/group_communicate">
         <menu>

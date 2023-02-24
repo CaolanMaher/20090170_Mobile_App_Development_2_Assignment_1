@@ -4,7 +4,7 @@
     package="ie.wit.a20090170_mobile_app_2_assignment_1">
 
     <application
-        android:name=".main.DonationXApp"
+        android:name=".main.DNDCampaignApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

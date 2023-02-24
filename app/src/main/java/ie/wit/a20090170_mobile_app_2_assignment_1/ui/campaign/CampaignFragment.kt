@@ -14,12 +14,13 @@ import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestAdapter
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestClickListener
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentCampaignBinding
-import ie.wit.a20090170_mobile_app_2_assignment_1.main.DonationXApp
+//import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentCampaignBinding
+import ie.wit.a20090170_mobile_app_2_assignment_1.main.DNDCampaignApp
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
 
 class CampaignFragment : Fragment(), QuestClickListener {
 
-    lateinit var app: DonationXApp
+    lateinit var app: DNDCampaignApp
     private var _fragBinding: FragmentCampaignBinding? = null
     private val fragBinding get() = _fragBinding!!
     private lateinit var campaignViewModel: CampaignViewModel

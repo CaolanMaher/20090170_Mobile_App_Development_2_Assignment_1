@@ -152,7 +152,7 @@ class QuestFragment : Fragment() {
             fragBinding.progressBar.max = quests.size
 
             fragBinding.progressBar.progress = totalQuestsCompleted
-            fragBinding.questCompletedSoFarAmount.text = getString(R.string.total_donated,totalQuestsCompleted)
+            fragBinding.questCompletedSoFarAmount.text = totalQuestsCompleted.toString()
         })
     }
 
