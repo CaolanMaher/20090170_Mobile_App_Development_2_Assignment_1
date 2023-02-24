@@ -1,7 +1,5 @@
 package ie.wit.a20090170_mobile_app_2_assignment_1.ui.map
 
-import android.content.Intent
-import android.location.Location
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
@@ -13,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -83,13 +80,7 @@ class MapsFragment : Fragment(), OnMarkerDragListener {
 
         mapsViewModel = ViewModelProvider(this).get(MapsViewModel::class.java)
 
-        //if(args.questID >= 0) {
-        //    quest = QuestManager.findById(args.questID)!!
-        //}
-
         fragBinding.saveLocationButton.setOnClickListener {
-            //val action = MapsFragmentDirections.actionMapsFragmentToQuestFragment(latitude.toFloat(), longitude.toFloat())
-            //findNavController().navigate(action)
             val navController = findNavController()
             navController.previousBackStackEntry?.savedStateHandle?.set("latitude", latitude)
             navController.previousBackStackEntry?.savedStateHandle?.set("longitude", longitude)
@@ -97,7 +88,6 @@ class MapsFragment : Fragment(), OnMarkerDragListener {
         }
 
         return root
-        //return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -112,14 +102,8 @@ class MapsFragment : Fragment(), OnMarkerDragListener {
 
     override fun onMarkerDragEnd(marker: Marker) {
         i("DRAG ENDED")
-        //if(args.questID >= 0) {
-        //    quest.longitude = marker.position.longitude
-        //    quest.latitude = marker.position.latitude
-        //}
-        //else {
-            latitude = marker.position.latitude
-            longitude = marker.position.longitude
-        //}
+        latitude = marker.position.latitude
+        longitude = marker.position.longitude
     }
 
     override fun onMarkerDragStart(p0: Marker) {

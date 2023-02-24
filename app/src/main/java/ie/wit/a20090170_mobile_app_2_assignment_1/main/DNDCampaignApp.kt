@@ -5,12 +5,9 @@ import timber.log.Timber
 
 class DNDCampaignApp : Application() {
 
-    //lateinit var donationsStore: DonationStore
-
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        //donationsStore = DonationManager()
-        Timber.i("DonationX Application Started")
+        Timber.i("DND Campaign Application Started")
     }
 }

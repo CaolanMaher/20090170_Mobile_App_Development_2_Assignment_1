@@ -16,8 +16,6 @@ import ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign.CampaignViewModel
 
 class QuestFragment : Fragment() {
 
-    //private val args by navArgs<QuestFragmentArgs>()
-
     var totalQuestsCompleted = 0
     private var _fragBinding: FragmentQuestBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
@@ -54,7 +52,6 @@ class QuestFragment : Fragment() {
                 longitude = it
             }
 
-        //val quests = QuestManager.findAll()
         val quests = questViewModel.getQuests()
 
         totalQuestsCompleted = 0
@@ -77,8 +74,6 @@ class QuestFragment : Fragment() {
             fragBinding.enterRewardAmount.setText("$newVal")
         }
         setButtonListener(fragBinding)
-
-        //quest = QuestModel(-1)
 
         return root
     }
@@ -124,10 +119,6 @@ class QuestFragment : Fragment() {
             layout.editQuestLocationName.setText("")
             layout.questCompleteBox.isChecked = false
             layout.rewardAmountPicker.value = 1
-
-            //val action = QuestFragmentDirections.actionQuestFragmentToCampaignFragment()
-            //findNavController().navigate(action)
-            //}
         }
 
         layout.addQuestLocationButton.setOnClickListener {

@@ -14,7 +14,6 @@ import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestAdapter
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestClickListener
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentCampaignBinding
-//import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentCampaignBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.main.DNDCampaignApp
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
 
@@ -62,30 +61,8 @@ class CampaignFragment : Fragment(), QuestClickListener {
             fragBinding.searchByQuestNameText.setText("")
             campaignViewModel.load()
         }
-
-        /*
-        val fab: FloatingActionButton = fragBinding.fab
-        fab.setOnClickListener {
-            val action = CampaignFragmentDirections.actionReportFragmentToDonateFragment()
-            findNavController().navigate(action)
-        }
-         */
         return root
     }
-
-    /*
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        Handler().postDelayed({
-            campaignViewModel.observableQuestsList.observe(viewLifecycleOwner, Observer {
-                    quests ->
-                quests?.let { render(quests) }
-            })
-        }, 3000)
-    }
-
-     */
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_campaign, menu)

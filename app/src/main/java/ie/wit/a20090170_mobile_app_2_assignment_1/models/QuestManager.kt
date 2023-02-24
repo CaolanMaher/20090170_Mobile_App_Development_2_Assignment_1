@@ -12,7 +12,7 @@ internal fun getQuestId(): Long {
 
 object QuestManager : QuestStore {
 
-    val quests = ArrayList<QuestModel>()
+    private val quests = ArrayList<QuestModel>()
 
     val db = Firebase.firestore
 

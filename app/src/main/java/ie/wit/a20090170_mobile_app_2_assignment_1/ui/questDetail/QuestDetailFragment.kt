@@ -60,13 +60,9 @@ class QuestDetailFragment : Fragment() {
                 longitude = it
             }
 
-        //val view = inflater.inflate(R.layout.fragment_quest_detail, container, false)
-
         Toast.makeText(context,"Quest ID Selected : ${args.questID}", Toast.LENGTH_LONG).show()
 
-        //var quests = QuestManager.findAll()
-
-        val quests = QuestManager.findAll()
+        val quests = questDetailViewModel.getQuests()
 
         totalQuestsCompleted = 0
         for(quest in quests) {
@@ -95,8 +91,6 @@ class QuestDetailFragment : Fragment() {
         setButtonListener(fragBinding)
 
         return root
-
-        //return view
     }
 
     private fun render(status: Boolean) {
@@ -139,7 +133,6 @@ class QuestDetailFragment : Fragment() {
 
             questDetailViewModel.updateQuest(quest)
 
-            //val quests = QuestManager.findAll()
             val quests = questDetailViewModel.getQuests()
 
             totalQuestsCompleted = 0
@@ -168,7 +161,6 @@ class QuestDetailFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        //val quests = QuestManager.findAll()
         val quests = questDetailViewModel.getQuests()
 
         totalQuestsCompleted = 0
@@ -181,10 +173,6 @@ class QuestDetailFragment : Fragment() {
         fragBinding.questsCompletedSoFarDetailAmount.text = totalQuestsCompleted.toString()
         fragBinding.questsCompletedProgressDetail.max = quests.size
         fragBinding.questsCompletedProgressDetail.progress = totalQuestsCompleted
-
-        //fragBinding.editQuestNameDetail.setText("")
-        //fragBinding.editQuestLocationNameDetail.setText("")
-        //fragBinding.editQuestDescriptionDetail.setText("")
     }
 
 }
