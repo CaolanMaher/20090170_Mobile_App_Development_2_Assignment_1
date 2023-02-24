@@ -42,10 +42,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.114" />
+        app:layout_constraintVertical_bias="0.085" />
 
     <Button
         android:id="@+id/questButton"
@@ -54,16 +54,15 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/questButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.887" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        app:layout_constraintVertical_bias="0.43" />
 
     <NumberPicker
         android:id="@+id/rewardAmountPicker"
@@ -82,11 +81,23 @@
         android:layout_above="@+id/progressBar"
         android:layout_below="@+id/questSubtitle"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="28dp"
         android:layout_toStartOf="@+id/rewardAmountPicker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rewardAmountPicker" />
+
+    <TextView
+        android:id="@+id/questComplete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/questComplete"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questRewardAmount" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -96,18 +107,18 @@
         android:layout_above="@+id/questButton"
         android:layout_alignEnd="@+id/questSubtitle"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         android:indeterminate="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questComplete" />
+        app:layout_constraintTop_toBottomOf="@+id/addQuestLocationButton" />
 
     <TextView
         android:id="@+id/totalQuestsCompleted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="56dp"
         android:text="@string/TotalQuestsCompleted"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         android:textSize="14sp"
@@ -118,7 +129,7 @@
         android:id="@+id/enterRewardAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="28dp"
         android:autofillHints="Please Enter an Amount"
         android:ems="10"
@@ -176,18 +187,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questDescription" />
 
-    <TextView
-        android:id="@+id/questComplete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="72dp"
-        android:text="@string/questComplete"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questRewardAmount" />
-
     <EditText
         android:id="@+id/editQuestName"
         android:layout_width="wrap_content"
@@ -222,9 +221,30 @@
         android:layout_marginEnd="28dp"
         android:ems="10"
         android:gravity="start|top"
-        android:inputType="textMultiLine"
+        android:inputType="textPersonName"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editQuestLocationName" />
+
+    <Button
+        android:id="@+id/addQuestLocationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/addQuestLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questComplete" />
+
+    <TextView
+        android:id="@+id/questCompletedSoFarAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
+        android:text="0"
+        app:layout_constraintStart_toEndOf="@+id/totalQuestsCompleted"
+        app:layout_constraintTop_toBottomOf="@+id/enterRewardAmount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

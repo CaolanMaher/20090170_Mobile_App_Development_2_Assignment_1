@@ -33,7 +33,7 @@ class QuestAdapter constructor(private var quests: List<QuestModel>,
 
         fun bind(quest: QuestModel, listener: QuestClickListener) {
             binding.quest = quest
-            binding.imageIcon.setImageResource(R.mipmap.ic_launcher_round)
+            //binding.imageIcon.setImageResource(R.drawable.quest_icon)
             binding.root.setOnClickListener { listener.onQuestClick(quest) }
             binding.executePendingBindings()
         }

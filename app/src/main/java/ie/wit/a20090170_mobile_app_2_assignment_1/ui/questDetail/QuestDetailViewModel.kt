@@ -30,4 +30,8 @@ class QuestDetailViewModel : ViewModel() {
             false
         }
     }
+
+    fun getQuests(): List<QuestModel> {
+        return QuestManager.findAll()
+    }
 }

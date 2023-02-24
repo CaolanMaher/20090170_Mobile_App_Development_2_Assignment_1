@@ -9,14 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
-import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentQuestBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentQuestDetailBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestManager
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
-import ie.wit.a20090170_mobile_app_2_assignment_1.ui.quest.QuestViewModel
+import ie.wit.a20090170_mobile_app_2_assignment_1.ui.quest.QuestFragmentDirections
 
 class QuestDetailFragment : Fragment() {
 
@@ -29,6 +27,11 @@ class QuestDetailFragment : Fragment() {
     private val fragBinding get() = _fragBinding!!
 
     private lateinit var quest : QuestModel
+
+    var totalQuestsCompleted = 0
+
+    private var latitude = 0.0
+    private var longitude = 0.0
 
     companion object {
         fun newInstance() = QuestDetailFragment()
@@ -47,11 +50,30 @@ class QuestDetailFragment : Fragment() {
                 status -> status?.let { render(status) }
         })
 
+        val navController = findNavController()
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Double>("latitude")
+            ?.observe(viewLifecycleOwner) {
+                latitude = it
+            }
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Double>("longitude")
+            ?.observe(viewLifecycleOwner) {
+                longitude = it
+            }
+
         //val view = inflater.inflate(R.layout.fragment_quest_detail, container, false)
 
         Toast.makeText(context,"Quest ID Selected : ${args.questID}", Toast.LENGTH_LONG).show()
 
         //var quests = QuestManager.findAll()
+
+        val quests = QuestManager.findAll()
+
+        totalQuestsCompleted = 0
+        for(quest in quests) {
+            if(quest.isCompleted) {
+                totalQuestsCompleted++
+            }
+        }
 
         quest = QuestManager.findById(args.questID)!!
 
@@ -60,10 +82,15 @@ class QuestDetailFragment : Fragment() {
         fragBinding.editQuestNameDetail.setText(quest.name)
         fragBinding.editQuestLocationNameDetail.setText(quest.locationName)
         fragBinding.editQuestDescriptionDetail.setText(quest.description)
-        fragBinding.editRewardAmountDetail.minValue = 0
+        fragBinding.editRewardAmountDetail.minValue = 1
         fragBinding.editRewardAmountDetail.maxValue = 1000
         fragBinding.editRewardAmountDetail.value = quest.reward
         fragBinding.editQuestCompleteDetail.isChecked = quest.isCompleted
+
+        fragBinding.questsCompletedProgressDetail.max = quests.size
+        fragBinding.questsCompletedProgressDetail.progress = totalQuestsCompleted
+
+        fragBinding.questsCompletedSoFarDetailAmount.text = totalQuestsCompleted.toString()
 
         setButtonListener(fragBinding)
 
@@ -77,7 +104,7 @@ class QuestDetailFragment : Fragment() {
             true -> {
                 view?.let {
                     //Uncomment this if you want to immediately return to Report
-                    findNavController().popBackStack()
+                    //findNavController().popBackStack()
                 }
             }
             false -> Toast.makeText(context,getString(R.string.questUpdateError),Toast.LENGTH_LONG).show()
@@ -86,13 +113,19 @@ class QuestDetailFragment : Fragment() {
 
     fun setButtonListener(layout: FragmentQuestDetailBinding) {
 
+        layout.editQuestLocationButton.setOnClickListener {
+            val action =
+                QuestDetailFragmentDirections.actionQuestDetailFragmentToMapsFragment(quest.id)
+            findNavController().navigate(action)
+        }
+
         layout.updateQuestButton.setOnClickListener {
             val newRewardAmount = layout.editRewardAmountDetail.value
-            val newQuestName = if(layout.editQuestNameDetail.text.isNotEmpty())
+            val newQuestName = if (layout.editQuestNameDetail.text.isNotEmpty())
                 layout.editQuestNameDetail.text.toString() else "N/A"
-            val newQuestLocationName = if(layout.editQuestLocationNameDetail.text.isNotEmpty())
+            val newQuestLocationName = if (layout.editQuestLocationNameDetail.text.isNotEmpty())
                 layout.editQuestLocationNameDetail.text.toString() else "N/A"
-            val newQuestDescription = if(layout.editQuestDescriptionDetail.text.isNotEmpty())
+            val newQuestDescription = if (layout.editQuestDescriptionDetail.text.isNotEmpty())
                 layout.editQuestDescriptionDetail.text.toString() else "N/A"
             val newQuestComplete = layout.editQuestCompleteDetail.isChecked
 
@@ -101,52 +134,57 @@ class QuestDetailFragment : Fragment() {
             quest.locationName = newQuestLocationName
             quest.description = newQuestDescription
             quest.isCompleted = newQuestComplete
+            quest.latitude = latitude
+            quest.longitude = longitude
 
             questDetailViewModel.updateQuest(quest)
+
+            //val quests = QuestManager.findAll()
+            val quests = questDetailViewModel.getQuests()
+
+            totalQuestsCompleted = 0
+            for (quest in quests) {
+                if (quest.isCompleted) {
+                    totalQuestsCompleted++
+                }
+            }
+
+            fragBinding.questsCompletedSoFarDetailAmount.text = totalQuestsCompleted.toString()
+            fragBinding.questsCompletedProgressDetail.progress = totalQuestsCompleted
+
+            layout.editQuestNameDetail.setText("")
+            layout.editQuestDescriptionDetail.setText("")
+            layout.editQuestLocationNameDetail.setText("")
+            layout.editRewardAmountDetail.value = 1
+            layout.editQuestCompleteDetail.isChecked = false
         }
 
         layout.deleteQuestButton.setOnClickListener {
             questDetailViewModel.deleteQuest(quest.id)
+            findNavController().popBackStack()
         }
+    }
 
-        /*
-        layout.questButton.setOnClickListener {
-            val rewardAmount = if (layout.enterRewardAmount.text.isNotEmpty())
-                layout.enterRewardAmount.text.toString().toInt() else layout.rewardAmountPicker.value
-            val questName = if(layout.editQuestName.text.isNotEmpty())
-                layout.editQuestName.text.toString() else "N/A"
-            val questLocationName = if(layout.editQuestLocationName.text.isNotEmpty())
-                layout.editQuestLocationName.text.toString() else "N/A"
-            val questDescription = if(layout.editQuestDescription.text.isNotEmpty())
-                layout.editQuestDescription.text.toString() else "N/A"
+    override fun onResume() {
+        super.onResume()
 
-            layout.progressBar.max++
-            //if(totalQuestsCompleted >= layout.progressBar.max)
-            //    Toast.makeText(context,"Donate Amount Exceeded!", Toast.LENGTH_LONG).show()
-            //else {
-            //val paymentmethod = if(layout.paymentMethod.checkedRadioButtonId == R.id.Direct) "Direct" else "Paypal"
-            val questComplete = layout.questCompleteBox.isChecked
-            if(questComplete) {
+        //val quests = QuestManager.findAll()
+        val quests = questDetailViewModel.getQuests()
+
+        totalQuestsCompleted = 0
+        for (quest in quests) {
+            if (quest.isCompleted) {
                 totalQuestsCompleted++
             }
-            layout.totalQuestsCompleted.text = getString(R.string.total_donated,totalQuestsCompleted)
-            layout.progressBar.progress = totalQuestsCompleted
-
-            val quest = QuestModel(0, questName, questDescription, questLocationName, rewardAmount, questComplete)
-            questViewModel.addQuest(quest)
-            //}
         }
 
-         */
-    }
+        fragBinding.questsCompletedSoFarDetailAmount.text = totalQuestsCompleted.toString()
+        fragBinding.questsCompletedProgressDetail.max = quests.size
+        fragBinding.questsCompletedProgressDetail.progress = totalQuestsCompleted
 
-    /*
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //viewModel = ViewModelProvider(this).get(QuestDetailViewModel::class.java)
-        // TODO: Use the ViewModel
+        //fragBinding.editQuestNameDetail.setText("")
+        //fragBinding.editQuestLocationNameDetail.setText("")
+        //fragBinding.editQuestDescriptionDetail.setText("")
     }
-
-     */
 
 }

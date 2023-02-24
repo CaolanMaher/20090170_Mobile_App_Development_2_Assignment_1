@@ -13,6 +13,8 @@ class QuestViewModel : ViewModel() {
     val observableStatus: LiveData<Boolean>
         get() = status
 
+    //private var quests = ArrayList<QuestModel>()
+
     fun addQuest(quest: QuestModel) {
         status.value = try {
             QuestManager.create(quest)
@@ -20,5 +22,9 @@ class QuestViewModel : ViewModel() {
         } catch (e: IllegalArgumentException) {
             false
         }
+    }
+
+    fun getQuests(): List<QuestModel> {
+        return QuestManager.findAll()
     }
 }

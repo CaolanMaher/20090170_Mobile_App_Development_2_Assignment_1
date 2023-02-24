@@ -29,7 +29,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginEnd="16dp"
-                app:srcCompat="@mipmap/ic_launcher_round"
+                app:srcCompat="@drawable/quest_icon"
                 android:contentDescription="@string/app_name" />
 
             <TextView

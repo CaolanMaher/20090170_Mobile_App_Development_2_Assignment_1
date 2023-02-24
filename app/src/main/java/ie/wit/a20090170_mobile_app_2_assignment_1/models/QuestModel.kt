@@ -10,5 +10,7 @@ data class QuestModel (
     var description : String = "N/A",
     var locationName : String = "N/A",
     var reward : Int = 0,
-    var isCompleted : Boolean = false
+    var isCompleted : Boolean = false,
+    var latitude : Double = 0.0,
+    var longitude : Double = 0.0
 ) : Parcelable

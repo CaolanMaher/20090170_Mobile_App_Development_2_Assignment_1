@@ -8,17 +8,8 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.about.AboutFragment"
-        android:label="@string/action_about"
+        android:label="@string/actionAboutUs"
         tools:layout="@layout/fragment_about" />
-    <fragment
-        android:id="@+id/donationDetailFragment"
-        android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.detail.DonationDetailFragment"
-        android:label="fragment_donation_detail"
-        tools:layout="@layout/fragment_donation_detail" >
-        <argument
-            android:name="donationid"
-            app:argType="long" />
-    </fragment>
     <fragment
         android:id="@+id/campaignFragment"
         android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign.CampaignFragment"
@@ -27,20 +18,50 @@
         <action
             android:id="@+id/action_campaignFragment_to_questDetailFragment"
             app:destination="@id/questDetailFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/questFragment"
         android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.quest.QuestFragment"
         android:label="fragment_quest"
-        tools:layout="@layout/fragment_quest" />
+        tools:layout="@layout/fragment_quest" >
+        <action
+            android:id="@+id/action_questFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_questFragment_to_campaignFragment"
+            app:destination="@id/campaignFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/questDetailFragment"
         android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.questDetail.QuestDetailFragment"
         android:label="fragment_quest_detail"
         tools:layout="@layout/fragment_quest_detail" >
+        <argument
+            android:name="questID"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_questDetailFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.map.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_questFragment"
+            app:destination="@id/questFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <argument
             android:name="questID"
             app:argType="long" />

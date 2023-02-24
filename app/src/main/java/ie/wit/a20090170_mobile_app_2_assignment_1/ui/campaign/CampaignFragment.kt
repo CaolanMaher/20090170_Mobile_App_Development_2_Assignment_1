@@ -1,6 +1,7 @@
 package ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -9,17 +10,17 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestAdapter
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestClickListener
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentCampaignBinding
-import ie.wit.a20090170_mobile_app_2_assignment_1.main.DonationXApp
+//import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentCampaignBinding
+import ie.wit.a20090170_mobile_app_2_assignment_1.main.DNDCampaignApp
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
 
 class CampaignFragment : Fragment(), QuestClickListener {
 
-    lateinit var app: DonationXApp
+    lateinit var app: DNDCampaignApp
     private var _fragBinding: FragmentCampaignBinding? = null
     private val fragBinding get() = _fragBinding!!
     private lateinit var campaignViewModel: CampaignViewModel
@@ -39,10 +40,15 @@ class CampaignFragment : Fragment(), QuestClickListener {
         fragBinding.questsRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         campaignViewModel = ViewModelProvider(this).get(CampaignViewModel::class.java)
+
         campaignViewModel.observableQuestsList.observe(viewLifecycleOwner, Observer {
                 quests ->
             quests?.let { render(quests) }
         })
+
+        Handler().postDelayed({
+                              campaignViewModel.load()
+        }, 2000)
 
         val searchButton = fragBinding.searchButton
         searchButton.setOnClickListener {
@@ -67,8 +73,22 @@ class CampaignFragment : Fragment(), QuestClickListener {
         return root
     }
 
+    /*
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        Handler().postDelayed({
+            campaignViewModel.observableQuestsList.observe(viewLifecycleOwner, Observer {
+                    quests ->
+                quests?.let { render(quests) }
+            })
+        }, 3000)
+    }
+
+     */
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_report, menu)
+        inflater.inflate(R.menu.menu_campaign, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -102,5 +122,6 @@ class CampaignFragment : Fragment(), QuestClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null
+        //parentFragment?.let { campaignViewModel.observableQuestsList.removeObservers(it.viewLifecycleOwner) }
     }
 }
