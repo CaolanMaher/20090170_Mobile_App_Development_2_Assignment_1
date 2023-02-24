@@ -54,10 +54,12 @@ object QuestManager : QuestStore {
     }
 
     override fun searchByQuestName(name: String): List<QuestModel> {
+        val nameLower = name.lowercase()
+
         val foundQuests = ArrayList<QuestModel>()
 
         for(quest in quests) {
-            if(quest.name.contains(name)) {
+            if(quest.name.lowercase().contains(nameLower)) {
                 foundQuests.add(quest)
             }
         }
@@ -79,7 +81,9 @@ object QuestManager : QuestStore {
                     val questLocationName = document.data.get("LocationName").toString()
                     val questReward = document.data.get("Reward").toString().toInt()
                     val questIsComplete = document.data.get("isCompleted").toString().toBoolean()
-                    val quest = QuestModel(questID, questName, questDescription, questLocationName, questReward, questIsComplete)
+                    val questLatitude = document.data.get("Latitude").toString().toDouble()
+                    val questLongitude = document.data.get("Longitude").toString().toDouble()
+                    val quest = QuestModel(questID, questName, questDescription, questLocationName, questReward, questIsComplete, questLatitude, questLongitude)
 
                     Timber.v("QUEST NAME $questName $questIsComplete")
 
@@ -102,7 +106,9 @@ object QuestManager : QuestStore {
             "Description" to quest.description,
             "LocationName" to quest.locationName,
             "Reward" to quest.reward,
-            "isCompleted" to quest.isCompleted
+            "isCompleted" to quest.isCompleted,
+            "Latitude" to quest.latitude,
+            "Longitude" to quest.longitude
         )
 
         db.collection("Quests")
@@ -142,6 +148,8 @@ object QuestManager : QuestStore {
                         questDocument.update("LocationName", quest.locationName)
                         questDocument.update("Reward", quest.reward)
                         questDocument.update("isCompleted", quest.isCompleted)
+                        questDocument.update("Latitude", quest.latitude)
+                        questDocument.update("Longitude", quest.longitude)
                     }
                 }
             }

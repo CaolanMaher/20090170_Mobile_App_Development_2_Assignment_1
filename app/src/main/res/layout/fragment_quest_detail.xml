@@ -8,31 +8,28 @@
         android:layout_height="match_parent"
         tools:context=".ui.questDetail.QuestDetailFragment">
 
-        <TextView
-            android:id="@+id/rewardAmountDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="88dp"
-            android:text="@string/questRewardAmount"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/questDescriptionDetail" />
+    <TextView
+        android:id="@+id/questCompletedDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="80dp"
+        android:text="@string/questComplete"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rewardAmountDetail" />
 
-        <TextView
-            android:id="@+id/questCompletedDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="104dp"
-            android:text="@string/questComplete"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rewardAmountDetail" />
+    <CheckBox
+        android:id="@+id/editQuestCompleteDetail"
+        android:layout_width="69dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editRewardAmountDetail" />
 
-        <TextView
+    <TextView
             android:id="@+id/questNameDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,8 +76,8 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.906" />
+        app:layout_constraintTop_toBottomOf="@+id/questsCompletedSoFarDetailAmount"
+        app:layout_constraintVertical_bias="0.225" />
 
     <Button
         android:id="@+id/deleteQuestButton"
@@ -93,8 +90,23 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.906" />
+        app:layout_constraintTop_toBottomOf="@+id/questsCompletedSoFarText"
+        app:layout_constraintVertical_bias="0.225" />
+
+    <Button
+        android:id="@+id/editQuestLocationButton"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/editQuestLocationButton"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questCompletedDetail"
+        app:layout_constraintVertical_bias="0.168" />
 
     <EditText
             android:id="@+id/editQuestNameDetail"
@@ -120,35 +132,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editQuestNameDetail" />
 
-        <EditText
-            android:id="@+id/editQuestDescriptionDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="20dp"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editQuestLocationNameDetail" />
+    <EditText
+        android:id="@+id/editQuestDescriptionDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editQuestLocationNameDetail" />
 
-        <NumberPicker
-            android:id="@+id/editRewardAmountDetail"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="52dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editQuestDescriptionDetail" />
+    <NumberPicker
+        android:id="@+id/editRewardAmountDetail"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editQuestDescriptionDetail" />
 
-        <CheckBox
-            android:id="@+id/editQuestCompleteDetail"
-            android:layout_width="69dp"
-            android:layout_height="59dp"
-            android:layout_marginTop="52dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editRewardAmountDetail" />
+    <TextView
+        android:id="@+id/rewardAmountDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/questRewardAmount"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questDescriptionDetail" />
 
     <TextView
         android:id="@+id/editQuestTitle"
@@ -174,4 +189,35 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/questsCompletedProgressDetail"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="358dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editQuestLocationButton" />
+
+    <TextView
+        android:id="@+id/questsCompletedSoFarText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/TotalQuestsCompleted"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questsCompletedProgressDetail" />
+
+    <TextView
+        android:id="@+id/questsCompletedSoFarDetailAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="124dp"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questsCompletedProgressDetail" />
 </androidx.constraintlayout.widget.ConstraintLayout>

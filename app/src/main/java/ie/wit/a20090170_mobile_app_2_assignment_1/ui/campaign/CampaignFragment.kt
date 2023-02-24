@@ -40,23 +40,14 @@ class CampaignFragment : Fragment(), QuestClickListener {
 
         campaignViewModel = ViewModelProvider(this).get(CampaignViewModel::class.java)
 
-        /*
-        Handler().postDelayed({
-            campaignViewModel.observableQuestsList.observe(viewLifecycleOwner, Observer {
-                    quests ->
-                quests?.let { render(quests) }
-            })
-        }, 3000)
-
-         */
-
-        /*
         campaignViewModel.observableQuestsList.observe(viewLifecycleOwner, Observer {
                 quests ->
             quests?.let { render(quests) }
         })
 
-         */
+        Handler().postDelayed({
+                              campaignViewModel.load()
+        }, 2000)
 
         val searchButton = fragBinding.searchButton
         searchButton.setOnClickListener {
@@ -81,6 +72,7 @@ class CampaignFragment : Fragment(), QuestClickListener {
         return root
     }
 
+    /*
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -92,8 +84,10 @@ class CampaignFragment : Fragment(), QuestClickListener {
         }, 3000)
     }
 
+     */
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_report, menu)
+        inflater.inflate(R.menu.menu_campaign, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -127,5 +121,6 @@ class CampaignFragment : Fragment(), QuestClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null
+        //parentFragment?.let { campaignViewModel.observableQuestsList.removeObservers(it.viewLifecycleOwner) }
     }
 }

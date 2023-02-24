@@ -19,9 +19,12 @@ class CampaignViewModel : ViewModel() {
     val observableQuestsList: LiveData<List<QuestModel>>
         get() = questsList
 
+    /*
     init {
         load()
     }
+
+     */
 
     fun load() {
         Timber.v("FETCHING DATA")
