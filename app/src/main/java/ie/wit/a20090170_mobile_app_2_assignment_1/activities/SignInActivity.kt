@@ -1,0 +1,129 @@
+package ie.wit.a20090170_mobile_app_2_assignment_1.activities
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import ie.wit.a20090170_mobile_app_2_assignment_1.R
+import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.ActivitySignInBinding
+import ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign.CampaignFragment
+import timber.log.Timber.Forest.i
+
+//import timber.log.Timber.i
+
+class SignInActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivitySignInBinding
+    private lateinit var auth: FirebaseAuth
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+        binding.emailSignIn.setText("")
+        binding.passwordSignIn.setText("")
+        binding.emailRegister.setText("")
+        binding.passwordRegister.setText("")
+
+        setContentView(binding.root)
+
+        auth = Firebase.auth
+
+        binding.buttonSignIn.setOnClickListener {
+            try {
+                val email = binding.emailSignIn.text.toString()
+                val password = binding.passwordSignIn.text.toString()
+                if(email.isNotEmpty() && password.isNotEmpty()) {
+                    signIn(email, password)
+
+                    binding.emailSignIn.setText("")
+                    binding.passwordSignIn.setText("")
+                    binding.emailRegister.setText("")
+                    binding.passwordRegister.setText("")
+                }
+                else {
+                    Toast.makeText(baseContext, "Please fill in necessary fields",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+            catch(e : Exception) {
+                i(e)
+            }
+        }
+
+        binding.buttonRegister.setOnClickListener {
+            try {
+                val email = binding.emailRegister.text.toString()
+                val password = binding.passwordRegister.text.toString()
+                if(email.isNotEmpty() && password.isNotEmpty()) {
+                    createAccount(email, password)
+
+                    binding.emailSignIn.setText("")
+                    binding.passwordSignIn.setText("")
+                    binding.emailRegister.setText("")
+                    binding.passwordRegister.setText("")
+                }
+                else {
+                    Toast.makeText(baseContext, "Please fill in necessary fields",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+            catch(e : Exception) {
+                i(e)
+            }
+        }
+    }
+
+    private fun signIn(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    //Log.d(TAG, "signInWithEmail:success")
+                    val user = auth.currentUser
+
+                    val launcherIntent = Intent(this, Home::class.java)
+                    listIntentLauncher.launch(launcherIntent)
+                    //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    //Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                    //updateUI(null)
+                }
+            }
+    }
+
+    private fun createAccount(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    //Log.d(TAG, "createUserWithEmail:success")
+                    val user = auth.currentUser
+
+                    val launcherIntent = Intent(this, Home::class.java)
+                    listIntentLauncher.launch(launcherIntent)
+                    //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    //Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    i(task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                    //updateUI(null)
+                }
+            }
+    }
+
+    private val listIntentLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { }
+
+}

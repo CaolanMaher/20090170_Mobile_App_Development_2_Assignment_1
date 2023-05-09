@@ -44,6 +44,15 @@
     <string name="navHeaderTitle">DnD Campaign Tracker</string>
     <string name="navHeaderSubTitle">dndcampaigntracker@dnd.com</string>
 
+    <!-- Sign In -->
+
+    <string name="hint_emailSignIn">Email</string>
+    <string name="hint_passwordSignIn">Password</string>
+    <string name="titleRegister">Register</string>
+    <string name="buttonRegister">Register</string>
+    <string name="titleSignIn">Sign In</string>
+    <string name="buttonSignIn">Sign In</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
