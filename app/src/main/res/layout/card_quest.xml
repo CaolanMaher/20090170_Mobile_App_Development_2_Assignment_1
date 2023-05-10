@@ -55,6 +55,18 @@
                 android:text="@{Integer.toString(quest.reward)}"
                 android:textSize="24sp" />
 
+            <ImageView
+                android:id="@+id/imagefavourite"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="5dp"
+                android:layout_toEndOf="@id/reward"
+                app:srcCompat="@android:drawable/star_big_off" />
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </layout>
