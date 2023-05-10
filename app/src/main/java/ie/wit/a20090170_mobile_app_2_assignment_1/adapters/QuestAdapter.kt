@@ -10,7 +10,7 @@ interface QuestClickListener {
     fun onQuestClick(quest: QuestModel)
 }
 
-class QuestAdapter constructor(private var quests: List<QuestModel>,
+class QuestAdapter constructor(private var quests: ArrayList<QuestModel>,
                                   private val listener: QuestClickListener)
     : RecyclerView.Adapter<QuestAdapter.MainHolder>() {
 
@@ -31,10 +31,18 @@ class QuestAdapter constructor(private var quests: List<QuestModel>,
     inner class MainHolder(val binding : CardQuestBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(quest: QuestModel, listener: QuestClickListener) {
+            //binding.root.tag = quest.id
+            binding.root.tag = quest
             binding.quest = quest
             //binding.imageIcon.setImageResource(R.drawable.quest_icon)
             binding.root.setOnClickListener { listener.onQuestClick(quest) }
             binding.executePendingBindings()
         }
     }
+
+    fun removeAt(position: Int) {
+        quests.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
 }

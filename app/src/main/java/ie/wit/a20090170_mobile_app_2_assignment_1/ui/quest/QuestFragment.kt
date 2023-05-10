@@ -111,7 +111,7 @@ class QuestFragment : Fragment() {
             layout.questCompletedSoFarAmount.text = totalQuestsCompleted.toString()
             layout.progressBar.progress = totalQuestsCompleted
 
-            val quest = QuestModel(0, questName, questDescription, questLocationName, rewardAmount, questComplete, latitude, longitude)
+            val quest = QuestModel("", 0, questName, questDescription, questLocationName, rewardAmount, questComplete, latitude, longitude)
             questViewModel.addQuest(quest)
 
             layout.editQuestName.setText("")

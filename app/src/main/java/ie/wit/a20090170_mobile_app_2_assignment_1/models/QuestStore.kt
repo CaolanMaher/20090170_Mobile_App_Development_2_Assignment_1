@@ -8,6 +8,7 @@ interface QuestStore {
     fun delete(id : Long)
     fun searchByQuestName(name : String) : List<QuestModel>
     fun getAllFromDatabase()
+    fun getAllForUser(userID: String)
     fun addToDatabase(quest : QuestModel)
     fun deleteFromDatabase(id : Long)
     fun updateInDatabase(quest : QuestModel)

@@ -3,11 +3,16 @@ package ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestManager
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
 import timber.log.Timber
 
 class CampaignViewModel : ViewModel() {
+
+    var auth: FirebaseAuth = Firebase.auth
 
     private val status = MutableLiveData<Boolean>()
 
@@ -21,11 +26,30 @@ class CampaignViewModel : ViewModel() {
 
     fun load() {
         Timber.v("FETCHING DATA")
-        questsList.value = QuestManager.findAll()
-        //questsList.value = QuestManager.getAllFromDatabase()
+
+        val user = auth.currentUser
+
+        if(user != null) {
+
+            //questsList.value = QuestManager.getAllForUser(user.uid)
+
+            //questsList.value = QuestManager.find
+            questsList.value = QuestManager.findAll()
+            //questsList.value = QuestManager.getAllFromDatabase()
+        }
     }
 
     fun searchByQuestName(name : String) {
         questsList.value = QuestManager.searchByQuestName(name)
+    }
+
+    fun delete(id : Long) {
+        try {
+            QuestManager.delete(id)
+            Timber.i("Successfully Deleted : ${questsList.value}")
+        }
+        catch (e: Exception) {
+            Timber.i("Error Deleting : ${e.message}")
+        }
     }
 }

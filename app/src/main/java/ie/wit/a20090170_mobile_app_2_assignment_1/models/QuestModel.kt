@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class QuestModel (
+    var userId: String = "",
     var id: Long = 0,
     var name : String = "N/A",
     var description : String = "N/A",

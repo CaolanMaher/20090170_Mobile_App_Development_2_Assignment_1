@@ -1,5 +1,9 @@
 package ie.wit.a20090170_mobile_app_2_assignment_1.models
 
+import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import timber.log.Timber
@@ -14,10 +18,21 @@ object QuestManager : QuestStore {
 
     private val quests = ArrayList<QuestModel>()
 
+    val auth: FirebaseAuth = Firebase.auth
+
+    //var liveFirebaseUser = MutableLiveData<FirebaseUser>()
+
     val db = Firebase.firestore
 
+    //var quest = QuestModel()
+
     init {
-        getAllFromDatabase()
+        //getAllFromDatabase()
+
+        val user = auth.currentUser
+        if(user != null) {
+            getAllForUser(user.uid)
+        }
         getLatestID()
     }
 
@@ -31,6 +46,12 @@ object QuestManager : QuestStore {
     }
 
     override fun create(quest: QuestModel) {
+
+        val user = auth.currentUser
+        if(user != null) {
+            quest.userId = user.uid
+        }
+
         quest.id = getQuestId()
         quests.add(quest)
 
@@ -75,6 +96,7 @@ object QuestManager : QuestStore {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     Timber.v("Found DATA")
+                    val questUserID = document.data.get("UserID").toString()
                     val questID = document.data.get("ID").toString().toLong()
                     val questName = document.data.get("Name").toString()
                     val questDescription = document.data.get("Description").toString()
@@ -83,7 +105,7 @@ object QuestManager : QuestStore {
                     val questIsComplete = document.data.get("isCompleted").toString().toBoolean()
                     val questLatitude = document.data.get("Latitude").toString().toDouble()
                     val questLongitude = document.data.get("Longitude").toString().toDouble()
-                    val quest = QuestModel(questID, questName, questDescription, questLocationName, questReward, questIsComplete, questLatitude, questLongitude)
+                    val quest = QuestModel(questUserID, questID, questName, questDescription, questLocationName, questReward, questIsComplete, questLatitude, questLongitude)
 
                     Timber.v("QUEST NAME $questName $questIsComplete")
 
@@ -98,9 +120,45 @@ object QuestManager : QuestStore {
         //return quests
     }
 
+    override fun getAllForUser(userID: String) {
+        quests.clear()
+
+        db.collection("Quests")
+            .get()
+            .addOnCompleteListener {
+                if(it.isSuccessful) {
+                    for(document in it.result!!) {
+                        if(document.data.getValue("UserID").toString() == userID) {
+                            // Add to list
+                            Timber.v("Found DATA")
+                            val questUserID = document.data.get("UserID").toString()
+                            val questID = document.data.get("ID").toString().toLong()
+                            val questName = document.data.get("Name").toString()
+                            val questDescription = document.data.get("Description").toString()
+                            val questLocationName = document.data.get("LocationName").toString()
+                            val questReward = document.data.get("Reward").toString().toInt()
+                            val questIsComplete = document.data.get("isCompleted").toString().toBoolean()
+                            val questLatitude = document.data.get("Latitude").toString().toDouble()
+                            val questLongitude = document.data.get("Longitude").toString().toDouble()
+                            val quest = QuestModel(questUserID, questID, questName, questDescription, questLocationName, questReward, questIsComplete, questLatitude, questLongitude)
+
+                            Timber.v("QUEST NAME $questName $questIsComplete")
+
+                            quests.add(quest)
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Timber.v("** Could Not Get From Database **")
+                Timber.v("FAILED$exception")
+            }
+    }
+
     override fun addToDatabase(quest: QuestModel) {
 
         val questToAdd = hashMapOf(
+            "UserID" to quest.userId,
             "ID" to quest.id,
             "Name" to quest.name,
             "Description" to quest.description,

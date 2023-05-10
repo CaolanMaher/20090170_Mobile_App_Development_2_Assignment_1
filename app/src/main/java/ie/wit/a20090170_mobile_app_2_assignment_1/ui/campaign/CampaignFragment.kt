@@ -9,13 +9,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestAdapter
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestClickListener
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentCampaignBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.main.DNDCampaignApp
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
+import ie.wit.a20090170_mobile_app_2_assignment_1.utils.SwipeToDeleteCallback
+import ie.wit.a20090170_mobile_app_2_assignment_1.utils.SwipeToEditCallback
 
 class CampaignFragment : Fragment(), QuestClickListener {
 
@@ -42,7 +46,7 @@ class CampaignFragment : Fragment(), QuestClickListener {
 
         campaignViewModel.observableQuestsList.observe(viewLifecycleOwner, Observer {
                 quests ->
-            quests?.let { render(quests) }
+            quests?.let { render(quests as ArrayList<QuestModel>) }
         })
 
         Handler().postDelayed({
@@ -61,6 +65,26 @@ class CampaignFragment : Fragment(), QuestClickListener {
             fragBinding.searchByQuestNameText.setText("")
             campaignViewModel.load()
         }
+
+        val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = fragBinding.questsRecyclerView.adapter as QuestAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+                campaignViewModel.delete((viewHolder.itemView.tag as QuestModel).id)
+            }
+        }
+        val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
+        itemTouchDeleteHelper.attachToRecyclerView(fragBinding.questsRecyclerView)
+
+        val swipeEditHandler = object : SwipeToEditCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                onQuestClick(viewHolder.itemView.tag as QuestModel)
+            }
+        }
+        val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
+        itemTouchEditHelper.attachToRecyclerView(fragBinding.questsRecyclerView)
+
+
         return root
     }
 
@@ -74,7 +98,7 @@ class CampaignFragment : Fragment(), QuestClickListener {
             requireView().findNavController()) || super.onOptionsItemSelected(item)
     }
 
-    private fun render(questsList: List<QuestModel>) {
+    private fun render(questsList: ArrayList<QuestModel>) {
         fragBinding.questsRecyclerView.adapter = QuestAdapter(questsList,this)
         if (questsList.isEmpty()) {
             fragBinding.questsRecyclerView.visibility = View.GONE
