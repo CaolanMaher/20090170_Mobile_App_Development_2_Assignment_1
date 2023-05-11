@@ -11,14 +11,16 @@ interface QuestClickListener {
 }
 
 class QuestAdapter constructor(private var quests: ArrayList<QuestModel>,
-                                  private val listener: QuestClickListener)
+                                  private val listener: QuestClickListener,
+                                    private val readOnly: Boolean)
     : RecyclerView.Adapter<QuestAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardQuestBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return MainHolder(binding)
+        //return MainHolder(binding)
+        return MainHolder(binding, readOnly)
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
@@ -28,6 +30,21 @@ class QuestAdapter constructor(private var quests: ArrayList<QuestModel>,
 
     override fun getItemCount(): Int = quests.size
 
+    inner class MainHolder(val binding : CardQuestBinding, private val readOnly : Boolean) : RecyclerView.ViewHolder(binding.root) {
+
+        val readOnlyRow = readOnly
+
+        fun bind(quest: QuestModel, listener: QuestClickListener) {
+            //binding.root.tag = quest.id
+            binding.root.tag = quest
+            binding.quest = quest
+            //binding.imageIcon.setImageResource(R.drawable.quest_icon)
+            binding.root.setOnClickListener { listener.onQuestClick(quest) }
+            binding.executePendingBindings()
+        }
+    }
+
+    /*
     inner class MainHolder(val binding : CardQuestBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(quest: QuestModel, listener: QuestClickListener) {
@@ -39,6 +56,7 @@ class QuestAdapter constructor(private var quests: ArrayList<QuestModel>,
             binding.executePendingBindings()
         }
     }
+     */
 
     fun removeAt(position: Int) {
         quests.removeAt(position)

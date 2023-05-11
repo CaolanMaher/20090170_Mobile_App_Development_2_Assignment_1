@@ -131,7 +131,7 @@ class CampaignFragment : Fragment(), QuestClickListener {
     }
 
     private fun render(questsList: ArrayList<QuestModel>) {
-        fragBinding.questsRecyclerView.adapter = QuestAdapter(questsList,this)
+        fragBinding.questsRecyclerView.adapter = QuestAdapter(questsList,this, campaignViewModel.readOnly.value!!)
         if (questsList.isEmpty()) {
             fragBinding.questsRecyclerView.visibility = View.GONE
             fragBinding.questsNotFound.visibility = View.VISIBLE
@@ -144,7 +144,10 @@ class CampaignFragment : Fragment(), QuestClickListener {
     override fun onQuestClick(quest: QuestModel) {
         //val action = ReportFragmentDirections.actionReportFragmentToDonationDetailFragment(donation.id)
         val action = CampaignFragmentDirections.actionCampaignFragmentToQuestDetailFragment(quest.id)
-        findNavController().navigate(action)
+
+        if(!campaignViewModel.readOnly.value!!) {
+            findNavController().navigate(action)
+        }
     }
 
     override fun onResume() {
