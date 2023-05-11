@@ -21,4 +21,10 @@
     <style name="Theme.DonationX.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.DonationX.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="toggleStyle">
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/black</item>
+    </style>
+
 </resources>

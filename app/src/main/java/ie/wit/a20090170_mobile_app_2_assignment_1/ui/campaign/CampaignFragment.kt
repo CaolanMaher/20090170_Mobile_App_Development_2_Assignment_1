@@ -3,6 +3,7 @@ package ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -88,10 +89,41 @@ class CampaignFragment : Fragment(), QuestClickListener {
         return root
     }
 
+    /*
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_campaign, menu)
+
+        val item = menu.findItem(R.id.toggleQuests) as MenuItem
+        item.setActionView(R.layout.togglebutton_layout)
+        val toggleQuests: SwitchCompat = item.actionView!!.findViewById(R.id.toggleButton)
+        toggleQuests.isChecked = false
+
+        toggleQuests.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) campaignViewModel.loadAll()
+            else campaignViewModel.load()
+        }
+    }
+     */
+
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        //inflater.inflate(R.menu.menu_campaign, menu)
+        //super.onCreateOptionsMenu(menu, inflater)
+
         inflater.inflate(R.menu.menu_campaign, menu)
+
+        val item = menu.findItem(R.id.toggleQuests) as MenuItem
+        item.setActionView(R.layout.togglebutton_layout)
+        val toggleQuests: SwitchCompat = item.actionView!!.findViewById(R.id.toggleButton)
+        toggleQuests.isChecked = false
+
+        toggleQuests.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) campaignViewModel.loadAll()
+            else campaignViewModel.load()
+        }
         super.onCreateOptionsMenu(menu, inflater)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(item,

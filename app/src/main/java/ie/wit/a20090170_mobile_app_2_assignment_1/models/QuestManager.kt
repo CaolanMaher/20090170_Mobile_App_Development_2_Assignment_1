@@ -31,13 +31,26 @@ object QuestManager : QuestStore {
 
         val user = auth.currentUser
         if(user != null) {
-            getAllForUser(user.uid)
+            //getAllForUser(user.uid)
+            getAllFromDatabase()
         }
         getLatestID()
     }
 
     override fun findAll(): List<QuestModel> {
         return quests
+    }
+
+    override fun findAllForUser(userID: String): List<QuestModel> {
+        val userQuests = ArrayList<QuestModel>()
+
+        for (quest in quests) {
+            if(quest.userId == auth.currentUser?.uid) {
+                userQuests.add(quest)
+            }
+        }
+
+        return userQuests
     }
 
     override fun findById(id: Long): QuestModel? {
@@ -120,6 +133,7 @@ object QuestManager : QuestStore {
         //return quests
     }
 
+    /*
     override fun getAllForUser(userID: String) {
         quests.clear()
 
@@ -154,6 +168,7 @@ object QuestManager : QuestStore {
                 Timber.v("FAILED$exception")
             }
     }
+     */
 
     override fun addToDatabase(quest: QuestModel) {
 

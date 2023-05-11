@@ -14,6 +14,8 @@ class CampaignViewModel : ViewModel() {
 
     var auth: FirebaseAuth = Firebase.auth
 
+    var readOnly = MutableLiveData(false)
+
     private val status = MutableLiveData<Boolean>()
 
     private val questsList = MutableLiveData<List<QuestModel>>()
@@ -27,6 +29,8 @@ class CampaignViewModel : ViewModel() {
     fun load() {
         Timber.v("FETCHING DATA")
 
+        readOnly.value = false
+
         val user = auth.currentUser
 
         if(user != null) {
@@ -34,8 +38,29 @@ class CampaignViewModel : ViewModel() {
             //questsList.value = QuestManager.getAllForUser(user.uid)
 
             //questsList.value = QuestManager.find
-            questsList.value = QuestManager.findAll()
+            //questsList.value = QuestManager.findAll()
             //questsList.value = QuestManager.getAllFromDatabase()
+
+            questsList.value = QuestManager.findAllForUser(user.uid)
+        }
+    }
+
+    fun loadAll() {
+        Timber.v("FETCHING ALL DATA")
+
+        readOnly.value = true
+
+        val user = auth.currentUser
+
+        if(user != null) {
+
+            //questsList.value = QuestManager.getAllForUser(user.uid)
+
+            //questsList.value = QuestManager.find
+            //questsList.value = QuestManager.findAll()
+            //QuestManager.getAllFromDatabase()
+
+            questsList.value = QuestManager.findAll()
         }
     }
 
