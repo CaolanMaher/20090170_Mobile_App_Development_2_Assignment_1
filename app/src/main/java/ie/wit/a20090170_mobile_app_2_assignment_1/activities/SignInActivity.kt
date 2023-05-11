@@ -18,6 +18,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.ActivitySignInBinding
+import ie.wit.a20090170_mobile_app_2_assignment_1.firebase.FirebaseImageManager
 import ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign.CampaignFragment
 import timber.log.Timber
 import timber.log.Timber.Forest.i
@@ -95,6 +96,10 @@ class SignInActivity : AppCompatActivity() {
 
         binding.googlButtonSignIn.setOnClickListener {
             signIn()
+        }
+
+        if(auth.currentUser != null) {
+            FirebaseImageManager.checkStorageForExistingProfilePic(auth.currentUser!!.uid)
         }
 
         configureGoogleSignIn()
