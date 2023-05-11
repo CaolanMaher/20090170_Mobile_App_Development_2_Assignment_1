@@ -53,7 +53,7 @@
                 android:textSize="34sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonSignIn" />
+                app:layout_constraintTop_toBottomOf="@+id/googlButtonSignIn" />
 
             <Button
                 android:id="@+id/buttonRegister"
@@ -116,7 +116,7 @@
                 android:layout_width="150dp"
                 android:layout_height="70dp"
                 android:layout_marginStart="161dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="160dp"
                 android:text="@string/buttonSignIn"
                 android:textSize="18sp"
@@ -124,6 +124,20 @@
                 app:layout_constraintHorizontal_bias="0.516"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/passwordSignIn" />
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/googlButtonSignIn"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="161dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="160dp"
+                android:text="@string/buttonSignIn"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.516"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonSignIn" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
