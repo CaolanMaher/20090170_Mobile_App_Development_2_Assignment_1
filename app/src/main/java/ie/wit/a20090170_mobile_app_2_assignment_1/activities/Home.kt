@@ -75,6 +75,7 @@ class Home : AppCompatActivity() {
 
         if(auth.currentUser != null) {
             updateNavHeader(auth.currentUser!!)
+            // test
         }
     }
 
