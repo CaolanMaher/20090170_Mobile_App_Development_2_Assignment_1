@@ -3,6 +3,7 @@ package ie.wit.a20090170_mobile_app_2_assignment_1.ui.quest
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ie.wit.a20090170_mobile_app_2_assignment_1.firebase.FirebaseImageManager
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestManager
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
 
@@ -17,6 +18,7 @@ class QuestViewModel : ViewModel() {
 
     fun addQuest(quest: QuestModel) {
         status.value = try {
+            quest.profilepic = FirebaseImageManager.imageUri.value.toString()
             QuestManager.create(quest)
             true
         } catch (e: IllegalArgumentException) {

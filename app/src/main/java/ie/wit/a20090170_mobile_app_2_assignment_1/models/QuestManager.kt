@@ -172,6 +172,11 @@ object QuestManager : QuestStore {
 
     override fun addToDatabase(quest: QuestModel) {
 
+        //if(quest.profilepic == "null") {
+        //    quest.profilepic = ""
+        //}
+
+        /*
         val questToAdd = hashMapOf(
             "UserID" to quest.userId,
             "ID" to quest.id,
@@ -181,8 +186,12 @@ object QuestManager : QuestStore {
             "Reward" to quest.reward,
             "isCompleted" to quest.isCompleted,
             "Latitude" to quest.latitude,
-            "Longitude" to quest.longitude
+            "Longitude" to quest.longitude,
+            "ProfilePic" to quest.profilepic
         )
+         */
+
+        val questToAdd = quest.toMap()
 
         db.collection("Quests")
             .add(questToAdd)

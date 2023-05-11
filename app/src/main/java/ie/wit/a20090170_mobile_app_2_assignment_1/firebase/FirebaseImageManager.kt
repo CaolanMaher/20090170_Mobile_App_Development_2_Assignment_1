@@ -21,7 +21,7 @@ object FirebaseImageManager {
 
     fun checkStorageForExistingProfilePic(userid: String) {
         val imageRef = storage.child("photos").child("${userid}.jpg")
-        val defaultImageRef = storage.child("ic_launcher_d20.png")
+        val defaultImageRef = storage.child("scroll.png")
         //val defaultImageRef = storage.child("homer.jpg")
 
         imageRef.metadata.addOnSuccessListener { //File Exists
@@ -31,6 +31,7 @@ object FirebaseImageManager {
             //File Doesn't Exist
         }.addOnFailureListener {
             imageUri.value = Uri.EMPTY
+            //imageUri.value = defaultImageRef.downloadUrl.result
         }
     }
 

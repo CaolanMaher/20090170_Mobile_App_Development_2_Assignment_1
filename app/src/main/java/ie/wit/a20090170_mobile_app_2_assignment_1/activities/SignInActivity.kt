@@ -98,9 +98,9 @@ class SignInActivity : AppCompatActivity() {
             signIn()
         }
 
-        if(auth.currentUser != null) {
-            FirebaseImageManager.checkStorageForExistingProfilePic(auth.currentUser!!.uid)
-        }
+        //if(auth.currentUser != null) {
+        //    FirebaseImageManager.checkStorageForExistingProfilePic(auth.currentUser!!.uid)
+        //}
 
         configureGoogleSignIn()
     }
@@ -112,6 +112,8 @@ class SignInActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     //Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
+
+                    FirebaseImageManager.checkStorageForExistingProfilePic(auth.currentUser!!.uid)
 
                     val launcherIntent = Intent(this, Home::class.java)
                     listIntentLauncher.launch(launcherIntent)
@@ -133,6 +135,8 @@ class SignInActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     //Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
+
+                    FirebaseImageManager.checkStorageForExistingProfilePic(auth.currentUser!!.uid)
 
                     val launcherIntent = Intent(this, Home::class.java)
                     listIntentLauncher.launch(launcherIntent)
@@ -185,6 +189,8 @@ class SignInActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     //Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
+
+                    FirebaseImageManager.checkStorageForExistingProfilePic(auth.currentUser!!.uid)
 
                     val launcherIntent = Intent(this, Home::class.java)
                     listIntentLauncher.launch(launcherIntent)

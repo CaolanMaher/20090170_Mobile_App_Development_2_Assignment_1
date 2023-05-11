@@ -2,9 +2,12 @@ package ie.wit.a20090170_mobile_app_2_assignment_1.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.CardQuestBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
+import ie.wit.a20090170_mobile_app_2_assignment_1.utils.customTransformation
 
 interface QuestClickListener {
     fun onQuestClick(quest: QuestModel)
@@ -38,6 +41,11 @@ class QuestAdapter constructor(private var quests: ArrayList<QuestModel>,
             //binding.root.tag = quest.id
             binding.root.tag = quest
             binding.quest = quest
+            Picasso.get().load(quest.profilepic.toUri())
+                .resize(200, 200)
+                .transform(customTransformation())
+                .centerCrop()
+                .into(binding.imageIcon)
             //binding.imageIcon.setImageResource(R.drawable.quest_icon)
             binding.root.setOnClickListener { listener.onQuestClick(quest) }
             binding.executePendingBindings()
