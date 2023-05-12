@@ -118,7 +118,9 @@ object QuestManager : QuestStore {
                     val questIsComplete = document.data.get("isCompleted").toString().toBoolean()
                     val questLatitude = document.data.get("Latitude").toString().toDouble()
                     val questLongitude = document.data.get("Longitude").toString().toDouble()
-                    val quest = QuestModel(questUserID, questID, questName, questDescription, questLocationName, questReward, questIsComplete, questLatitude, questLongitude)
+                    val profilepic = document.data.get("ProfilePic").toString()
+                    val isFavourite = document.data.get("isFavourite") as Boolean
+                    val quest = QuestModel(questUserID, questID, questName, questDescription, questLocationName, questReward, questIsComplete, questLatitude, questLongitude, profilepic, isFavourite)
 
                     Timber.v("QUEST NAME $questName $questIsComplete")
 
@@ -232,6 +234,8 @@ object QuestManager : QuestStore {
                         questDocument.update("isCompleted", quest.isCompleted)
                         questDocument.update("Latitude", quest.latitude)
                         questDocument.update("Longitude", quest.longitude)
+                        questDocument.update("ProfilePic", quest.profilepic)
+                        questDocument.update("isFavourite", quest.isFavourite)
                     }
                 }
             }

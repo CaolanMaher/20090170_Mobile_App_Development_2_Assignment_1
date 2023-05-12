@@ -1,5 +1,6 @@
 package ie.wit.a20090170_mobile_app_2_assignment_1.ui.map
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.location.Location
 import android.os.Looper
@@ -10,6 +11,7 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
 import timber.log.Timber
 
+@SuppressLint("MissingPermission")
 class GoogleMapsViewModel(application: Application) : AndroidViewModel(application) {
 
     lateinit var map : GoogleMap
@@ -33,6 +35,7 @@ class GoogleMapsViewModel(application: Application) : AndroidViewModel(applicati
         locationClient.requestLocationUpdates(locationRequest, locationCallback,
             Looper.getMainLooper())
     }
+
     fun updateCurrentLocation() {
         if(locationClient.lastLocation.isSuccessful)
             locationClient.lastLocation

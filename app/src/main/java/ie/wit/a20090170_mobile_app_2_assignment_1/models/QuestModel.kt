@@ -17,7 +17,8 @@ data class QuestModel (
     var isCompleted : Boolean = false,
     var latitude : Double = 0.0,
     var longitude : Double = 0.0,
-    var profilepic: String = ""
+    var profilepic: String = "",
+    var isFavourite: Boolean = false
 ) : Parcelable
 
 {
@@ -33,7 +34,8 @@ data class QuestModel (
             "isCompleted" to isCompleted,
             "Latitude" to latitude,
             "Longitude" to longitude,
-            "ProfilePic" to profilepic
+            "ProfilePic" to profilepic,
+            "isFavourite" to isFavourite
         )
     }
 }

@@ -3,6 +3,7 @@ package ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestAdapter
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestClickListener
+import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.CardQuestBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentCampaignBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.main.DNDCampaignApp
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
@@ -85,7 +87,6 @@ class CampaignFragment : Fragment(), QuestClickListener {
         val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
         itemTouchEditHelper.attachToRecyclerView(fragBinding.questsRecyclerView)
 
-
         return root
     }
 
@@ -105,6 +106,9 @@ class CampaignFragment : Fragment(), QuestClickListener {
     }
      */
 
+    fun addToFavourite() {
+
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         //inflater.inflate(R.menu.menu_campaign, menu)
@@ -148,6 +152,21 @@ class CampaignFragment : Fragment(), QuestClickListener {
         if(!campaignViewModel.readOnly.value!!) {
             findNavController().navigate(action)
         }
+    }
+
+    override fun onQuestFavouriteClick(quest: QuestModel) {
+        quest.isFavourite = !quest.isFavourite
+
+        if (quest.isFavourite) {
+            Toast.makeText(activity, "Added quest: ${quest.id} to favourites",
+                Toast.LENGTH_SHORT).show()
+        }
+        else {
+            Toast.makeText(activity, "Removed quest: ${quest.id} from favourites",
+                Toast.LENGTH_SHORT).show()
+        }
+
+        campaignViewModel.updateQuest(quest)
     }
 
     override fun onResume() {

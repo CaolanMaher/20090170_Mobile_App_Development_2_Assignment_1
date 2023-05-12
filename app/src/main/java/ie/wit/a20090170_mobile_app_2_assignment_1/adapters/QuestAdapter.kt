@@ -5,12 +5,15 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.CardQuestBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
 import ie.wit.a20090170_mobile_app_2_assignment_1.utils.customTransformation
+import timber.log.Timber
 
 interface QuestClickListener {
     fun onQuestClick(quest: QuestModel)
+    fun onQuestFavouriteClick(quest: QuestModel)
 }
 
 class QuestAdapter constructor(private var quests: ArrayList<QuestModel>,
@@ -46,8 +49,16 @@ class QuestAdapter constructor(private var quests: ArrayList<QuestModel>,
                 .transform(customTransformation())
                 .centerCrop()
                 .into(binding.imageIcon)
+            if(quest.isFavourite) {
+                Picasso.get().load(R.drawable.quest_icon)
+                    .resize(200, 200)
+                    //.transform(customTransformation())
+                    //.centerCrop()
+                    .into(binding.imagefavourite)
+            }
             //binding.imageIcon.setImageResource(R.drawable.quest_icon)
             binding.root.setOnClickListener { listener.onQuestClick(quest) }
+            binding.imagefavourite.setOnClickListener { listener.onQuestFavouriteClick(quest) }
             binding.executePendingBindings()
         }
     }

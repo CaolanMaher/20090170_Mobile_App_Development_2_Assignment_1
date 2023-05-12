@@ -68,6 +68,15 @@ class CampaignViewModel : ViewModel() {
         questsList.value = QuestManager.searchByQuestName(name)
     }
 
+    fun updateQuest(quest: QuestModel) {
+        status.value = try {
+            QuestManager.update(quest)
+            true
+        } catch (e: IllegalArgumentException) {
+            false
+        }
+    }
+
     fun delete(id : Long) {
         try {
             QuestManager.delete(id)
