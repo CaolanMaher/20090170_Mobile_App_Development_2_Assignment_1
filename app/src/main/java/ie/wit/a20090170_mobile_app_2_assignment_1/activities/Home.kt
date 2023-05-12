@@ -1,12 +1,15 @@
 package ie.wit.a20090170_mobile_app_2_assignment_1.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.location.Location
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.*
@@ -24,7 +27,11 @@ import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.HomeBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.NavHeaderBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.firebase.FirebaseImageManager
+import ie.wit.a20090170_mobile_app_2_assignment_1.ui.map.GoogleMapsViewModel
+import ie.wit.a20090170_mobile_app_2_assignment_1.ui.map.MapsViewModel
+import ie.wit.a20090170_mobile_app_2_assignment_1.utils.checkLocationPermissions
 import ie.wit.a20090170_mobile_app_2_assignment_1.utils.customTransformation
+import ie.wit.a20090170_mobile_app_2_assignment_1.utils.isPermissionGranted
 import timber.log.Timber
 
 class Home : AppCompatActivity() {
@@ -37,6 +44,8 @@ class Home : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     lateinit var googleSignInClient: GoogleSignInClient
+
+    private val googleMapsViewModel : GoogleMapsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +73,7 @@ class Home : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(setOf(
             //R.id.donateFragment, R.id.reportFragment, R.id.aboutFragment
-            R.id.campaignFragment, R.id.questFragment, R.id.aboutFragment
+            R.id.campaignFragment, R.id.questFragment, R.id.aboutFragment, R.id.googleMapsFragment
         ), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -80,6 +89,11 @@ class Home : AppCompatActivity() {
 
         //googleSignInClient.value = GoogleSignIn.getClient(application!!.applicationContext,gso)
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        if(checkLocationPermissions(this)) {
+            googleMapsViewModel.updateCurrentLocation()
+        }
+
 
 //        navController.addOnDestinationChangedListener { _, destination, arguments ->
 //            when(destination.id) {
@@ -179,4 +193,20 @@ class Home : AppCompatActivity() {
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { }
+
+    @SuppressLint("MissingPermission")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (isPermissionGranted(requestCode, grantResults))
+            googleMapsViewModel.updateCurrentLocation()
+        else {
+            // permissions denied, so use a default location
+            googleMapsViewModel.currentLocation.value = Location("Default").apply {
+                latitude = 52.245696
+                longitude = -7.139102
+            }
+        }
+        Timber.i("LOC : %s", googleMapsViewModel.currentLocation.value)
+    }
+
 }

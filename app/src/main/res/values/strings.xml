@@ -44,6 +44,8 @@
     <string name="navHeaderTitle">DnD Campaign Tracker</string>
     <string name="navHeaderSubTitle">dndcampaigntracker@dnd.com</string>
 
+    <string name="action_location">Location</string>
+
     <!-- Sign In -->
 
     <string name="hint_emailSignIn">Email</string>

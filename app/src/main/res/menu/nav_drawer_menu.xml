@@ -12,6 +12,10 @@
             android:icon="@drawable/ic_menu_campaign"
             android:title="@string/actionCampaign" />
         <item
+            android:id="@id/googleMapsFragment"
+            android:icon="@drawable/ic_menu_location"
+            android:title="@string/action_location" />
+        <item
             android:id="@+id/aboutFragment"
             android:icon="@drawable/ic_menu_aboutus"
             android:title="@string/actionAboutUs" />
