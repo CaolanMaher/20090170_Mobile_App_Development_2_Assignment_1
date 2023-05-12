@@ -8,6 +8,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.campaign.CampaignFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        android:layout_width="402dp"
+        android:layout_height="660dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchByQuestNameText"
+        app:layout_constraintVertical_bias="0">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/questsRecyclerView"
         android:layout_width="387dp"
@@ -16,6 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchByQuestNameText" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/questsNotFound"

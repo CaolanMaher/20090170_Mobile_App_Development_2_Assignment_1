@@ -3,6 +3,8 @@ package ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
+import android.widget.Toast
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestAdapter
 import ie.wit.a20090170_mobile_app_2_assignment_1.adapters.QuestClickListener
+import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.CardQuestBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.FragmentCampaignBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.main.DNDCampaignApp
 import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestModel
@@ -46,7 +49,10 @@ class CampaignFragment : Fragment(), QuestClickListener {
 
         campaignViewModel.observableQuestsList.observe(viewLifecycleOwner, Observer {
                 quests ->
-            quests?.let { render(quests as ArrayList<QuestModel>) }
+            quests?.let {
+                render(quests as ArrayList<QuestModel>)
+                checkSwipeRefresh()
+            }
         })
 
         Handler().postDelayed({
@@ -66,6 +72,8 @@ class CampaignFragment : Fragment(), QuestClickListener {
             campaignViewModel.load()
         }
 
+        setSwipeRefresh()
+
         val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = fragBinding.questsRecyclerView.adapter as QuestAdapter
@@ -84,14 +92,47 @@ class CampaignFragment : Fragment(), QuestClickListener {
         val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
         itemTouchEditHelper.attachToRecyclerView(fragBinding.questsRecyclerView)
 
-
         return root
     }
 
+    /*
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_campaign, menu)
+
+        val item = menu.findItem(R.id.toggleQuests) as MenuItem
+        item.setActionView(R.layout.togglebutton_layout)
+        val toggleQuests: SwitchCompat = item.actionView!!.findViewById(R.id.toggleButton)
+        toggleQuests.isChecked = false
+
+        toggleQuests.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) campaignViewModel.loadAll()
+            else campaignViewModel.load()
+        }
+    }
+     */
+
+    fun addToFavourite() {
+
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        //inflater.inflate(R.menu.menu_campaign, menu)
+        //super.onCreateOptionsMenu(menu, inflater)
+
         inflater.inflate(R.menu.menu_campaign, menu)
+
+        val item = menu.findItem(R.id.toggleQuests) as MenuItem
+        item.setActionView(R.layout.togglebutton_layout)
+        val toggleQuests: SwitchCompat = item.actionView!!.findViewById(R.id.toggleButton)
+        toggleQuests.isChecked = false
+
+        toggleQuests.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) campaignViewModel.loadAll()
+            else campaignViewModel.load()
+        }
         super.onCreateOptionsMenu(menu, inflater)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(item,
@@ -99,7 +140,7 @@ class CampaignFragment : Fragment(), QuestClickListener {
     }
 
     private fun render(questsList: ArrayList<QuestModel>) {
-        fragBinding.questsRecyclerView.adapter = QuestAdapter(questsList,this)
+        fragBinding.questsRecyclerView.adapter = QuestAdapter(questsList,this, campaignViewModel.readOnly.value!!)
         if (questsList.isEmpty()) {
             fragBinding.questsRecyclerView.visibility = View.GONE
             fragBinding.questsNotFound.visibility = View.VISIBLE
@@ -112,8 +153,47 @@ class CampaignFragment : Fragment(), QuestClickListener {
     override fun onQuestClick(quest: QuestModel) {
         //val action = ReportFragmentDirections.actionReportFragmentToDonationDetailFragment(donation.id)
         val action = CampaignFragmentDirections.actionCampaignFragmentToQuestDetailFragment(quest.id)
-        findNavController().navigate(action)
+
+        if(!campaignViewModel.readOnly.value!!) {
+            findNavController().navigate(action)
+        }
     }
+
+    override fun onQuestFavouriteClick(quest: QuestModel) {
+        quest.isFavourite = !quest.isFavourite
+
+        if (quest.isFavourite) {
+            Toast.makeText(activity, "Added quest: ${quest.id} to favourites",
+                Toast.LENGTH_SHORT).show()
+        }
+        else {
+            Toast.makeText(activity, "Removed quest: ${quest.id} from favourites",
+                Toast.LENGTH_SHORT).show()
+        }
+
+        campaignViewModel.updateQuest(quest)
+    }
+
+    fun setSwipeRefresh() {
+        fragBinding.swiperefresh.setOnRefreshListener {
+            fragBinding.swiperefresh.isRefreshing = true
+            //showLoader(loader,"Downloading Donations")
+            //Retrieve Donation List again here
+
+            if(campaignViewModel.readOnly.value!!) {
+                campaignViewModel.loadAll()
+            }
+            else {
+                campaignViewModel.load()
+            }
+        }
+    }
+
+    fun checkSwipeRefresh() {
+        if (fragBinding.swiperefresh.isRefreshing)
+            fragBinding.swiperefresh.isRefreshing = false
+    }
+
 
     override fun onResume() {
         super.onResume()

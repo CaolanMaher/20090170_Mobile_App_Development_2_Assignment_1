@@ -66,4 +66,13 @@
             android:name="questID"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/googleMapsFragment"
+        android:name="ie.wit.a20090170_mobile_app_2_assignment_1.ui.map.GoogleMapsFragment"
+        android:label="Quest Map"
+        tools:layout="@layout/fragment_google_maps" >
+        <action
+            android:id="@+id/action_googleMapsFragment_to_questDetailFragment2"
+            app:destination="@id/questDetailFragment" />
+    </fragment>
 </navigation>

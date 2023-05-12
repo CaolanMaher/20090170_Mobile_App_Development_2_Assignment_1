@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ie.wit.a20090170_mobile_app_2_assignment_1">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:name=".main.DNDCampaignApp"
         android:allowBackup="true"
@@ -34,12 +37,12 @@
             android:name=".activities.Home"
             android:exported="true">
             <intent-filter>
+
                 <!-- <action android:name="android.intent.action.MAIN" /> -->
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.SignInActivity"
             android:exported="true">
@@ -49,7 +52,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

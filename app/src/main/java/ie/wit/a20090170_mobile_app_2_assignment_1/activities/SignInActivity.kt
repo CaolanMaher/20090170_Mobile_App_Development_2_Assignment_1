@@ -18,6 +18,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import ie.wit.a20090170_mobile_app_2_assignment_1.R
 import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.ActivitySignInBinding
+import ie.wit.a20090170_mobile_app_2_assignment_1.firebase.FirebaseImageManager
 import ie.wit.a20090170_mobile_app_2_assignment_1.ui.campaign.CampaignFragment
 import timber.log.Timber
 import timber.log.Timber.Forest.i
@@ -37,10 +38,10 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivitySignInBinding.inflate(layoutInflater)
-        binding.emailSignIn.setText("")
-        binding.passwordSignIn.setText("")
-        binding.emailRegister.setText("")
-        binding.passwordRegister.setText("")
+        binding.emailSignInNew.setText("")
+        binding.passwordSignInNew.setText("")
+        binding.emailRegisterNew.setText("")
+        binding.passwordRegisterNew.setText("")
 
         setContentView(binding.root)
 
@@ -51,15 +52,15 @@ class SignInActivity : AppCompatActivity() {
 
         binding.buttonSignIn.setOnClickListener {
             try {
-                val email = binding.emailSignIn.text.toString()
-                val password = binding.passwordSignIn.text.toString()
+                val email = binding.emailSignInNew.text.toString()
+                val password = binding.passwordSignInNew.text.toString()
                 if(email.isNotEmpty() && password.isNotEmpty()) {
                     signIn(email, password)
 
-                    binding.emailSignIn.setText("")
-                    binding.passwordSignIn.setText("")
-                    binding.emailRegister.setText("")
-                    binding.passwordRegister.setText("")
+                    binding.emailSignInNew.setText("")
+                    binding.passwordSignInNew.setText("")
+                    binding.emailRegisterNew.setText("")
+                    binding.passwordRegisterNew.setText("")
                 }
                 else {
                     Toast.makeText(baseContext, "Please fill in necessary fields",
@@ -73,15 +74,15 @@ class SignInActivity : AppCompatActivity() {
 
         binding.buttonRegister.setOnClickListener {
             try {
-                val email = binding.emailRegister.text.toString()
-                val password = binding.passwordRegister.text.toString()
+                val email = binding.emailRegisterNew.text.toString()
+                val password = binding.passwordRegisterNew.text.toString()
                 if(email.isNotEmpty() && password.isNotEmpty()) {
                     createAccount(email, password)
 
-                    binding.emailSignIn.setText("")
-                    binding.passwordSignIn.setText("")
-                    binding.emailRegister.setText("")
-                    binding.passwordRegister.setText("")
+                    binding.emailSignInNew.setText("")
+                    binding.passwordSignInNew.setText("")
+                    binding.emailRegisterNew.setText("")
+                    binding.passwordRegisterNew.setText("")
                 }
                 else {
                     Toast.makeText(baseContext, "Please fill in necessary fields",
@@ -97,6 +98,10 @@ class SignInActivity : AppCompatActivity() {
             signIn()
         }
 
+        //if(auth.currentUser != null) {
+        //    FirebaseImageManager.checkStorageForExistingProfilePic(auth.currentUser!!.uid)
+        //}
+
         configureGoogleSignIn()
     }
 
@@ -107,6 +112,8 @@ class SignInActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     //Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
+
+                    FirebaseImageManager.checkStorageForExistingProfilePic(auth.currentUser!!.uid)
 
                     val launcherIntent = Intent(this, Home::class.java)
                     listIntentLauncher.launch(launcherIntent)
@@ -128,6 +135,8 @@ class SignInActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     //Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
+
+                    FirebaseImageManager.checkStorageForExistingProfilePic(auth.currentUser!!.uid)
 
                     val launcherIntent = Intent(this, Home::class.java)
                     listIntentLauncher.launch(launcherIntent)
@@ -180,6 +189,8 @@ class SignInActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     //Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
+
+                    FirebaseImageManager.checkStorageForExistingProfilePic(auth.currentUser!!.uid)
 
                     val launcherIntent = Intent(this, Home::class.java)
                     listIntentLauncher.launch(launcherIntent)

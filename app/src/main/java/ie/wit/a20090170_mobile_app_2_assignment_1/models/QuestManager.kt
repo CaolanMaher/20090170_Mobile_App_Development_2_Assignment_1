@@ -31,13 +31,26 @@ object QuestManager : QuestStore {
 
         val user = auth.currentUser
         if(user != null) {
-            getAllForUser(user.uid)
+            //getAllForUser(user.uid)
+            getAllFromDatabase()
         }
         getLatestID()
     }
 
     override fun findAll(): List<QuestModel> {
         return quests
+    }
+
+    override fun findAllForUser(userID: String): List<QuestModel> {
+        val userQuests = ArrayList<QuestModel>()
+
+        for (quest in quests) {
+            if(quest.userId == auth.currentUser?.uid) {
+                userQuests.add(quest)
+            }
+        }
+
+        return userQuests
     }
 
     override fun findById(id: Long): QuestModel? {
@@ -65,6 +78,16 @@ object QuestManager : QuestStore {
         quests.add(quest)
 
         updateInDatabase(quest)
+    }
+
+    override fun updateImage(userID: String, imageUri: String) {
+        for(quest in quests) {
+            if(quest.userId == userID) {
+                Timber.i("PFP ${imageUri}")
+                quest.profilepic = imageUri
+                updateInDatabase(quest)
+            }
+        }
     }
 
     override fun delete(id: Long) {
@@ -105,7 +128,9 @@ object QuestManager : QuestStore {
                     val questIsComplete = document.data.get("isCompleted").toString().toBoolean()
                     val questLatitude = document.data.get("Latitude").toString().toDouble()
                     val questLongitude = document.data.get("Longitude").toString().toDouble()
-                    val quest = QuestModel(questUserID, questID, questName, questDescription, questLocationName, questReward, questIsComplete, questLatitude, questLongitude)
+                    val profilepic = document.data.get("ProfilePic").toString()
+                    val isFavourite = document.data.get("isFavourite") as Boolean
+                    val quest = QuestModel(questUserID, questID, questName, questDescription, questLocationName, questReward, questIsComplete, questLatitude, questLongitude, profilepic, isFavourite)
 
                     Timber.v("QUEST NAME $questName $questIsComplete")
 
@@ -120,6 +145,7 @@ object QuestManager : QuestStore {
         //return quests
     }
 
+    /*
     override fun getAllForUser(userID: String) {
         quests.clear()
 
@@ -154,9 +180,15 @@ object QuestManager : QuestStore {
                 Timber.v("FAILED$exception")
             }
     }
+     */
 
     override fun addToDatabase(quest: QuestModel) {
 
+        //if(quest.profilepic == "null") {
+        //    quest.profilepic = ""
+        //}
+
+        /*
         val questToAdd = hashMapOf(
             "UserID" to quest.userId,
             "ID" to quest.id,
@@ -166,8 +198,12 @@ object QuestManager : QuestStore {
             "Reward" to quest.reward,
             "isCompleted" to quest.isCompleted,
             "Latitude" to quest.latitude,
-            "Longitude" to quest.longitude
+            "Longitude" to quest.longitude,
+            "ProfilePic" to quest.profilepic
         )
+         */
+
+        val questToAdd = quest.toMap()
 
         db.collection("Quests")
             .add(questToAdd)
@@ -208,6 +244,8 @@ object QuestManager : QuestStore {
                         questDocument.update("isCompleted", quest.isCompleted)
                         questDocument.update("Latitude", quest.latitude)
                         questDocument.update("Longitude", quest.longitude)
+                        questDocument.update("ProfilePic", quest.profilepic)
+                        questDocument.update("isFavourite", quest.isFavourite)
                     }
                 }
             }
