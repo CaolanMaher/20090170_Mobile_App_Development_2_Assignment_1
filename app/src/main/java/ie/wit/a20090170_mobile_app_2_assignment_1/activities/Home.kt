@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
@@ -32,9 +34,7 @@ import ie.wit.a20090170_mobile_app_2_assignment_1.databinding.NavHeaderBinding
 import ie.wit.a20090170_mobile_app_2_assignment_1.firebase.FirebaseImageManager
 import ie.wit.a20090170_mobile_app_2_assignment_1.ui.map.GoogleMapsViewModel
 import ie.wit.a20090170_mobile_app_2_assignment_1.ui.map.MapsViewModel
-import ie.wit.a20090170_mobile_app_2_assignment_1.utils.checkLocationPermissions
-import ie.wit.a20090170_mobile_app_2_assignment_1.utils.customTransformation
-import ie.wit.a20090170_mobile_app_2_assignment_1.utils.isPermissionGranted
+import ie.wit.a20090170_mobile_app_2_assignment_1.utils.*
 import timber.log.Timber
 
 class Home : AppCompatActivity() {
@@ -47,6 +47,8 @@ class Home : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     lateinit var googleSignInClient: GoogleSignInClient
+
+    private lateinit var intentLauncher : ActivityResultLauncher<Intent>
 
     var isDarkMode = false
     //var addActionBar = true
@@ -119,6 +121,8 @@ class Home : AppCompatActivity() {
             updateNavHeader(auth.currentUser!!)
             // test
         }
+
+        registerImagePickerCallback()
     }
 
     private fun updateNavHeader(currentUser: FirebaseUser) {
@@ -184,6 +188,16 @@ class Home : AppCompatActivity() {
         Timber.i("DX Init Nav Header")
         headerView = homeBinding.navView.getHeaderView(0)
         navHeaderBinding = NavHeaderBinding.bind(headerView)
+
+        /*
+        navHeaderBinding.imageView.setOnClickListener {
+            Toast.makeText(this,"Click To Change Image",Toast.LENGTH_SHORT).show()
+        }
+         */
+        navHeaderBinding.imageView.setOnClickListener {
+            showImagePicker(intentLauncher)
+        }
+
     }
 
     fun signOut(item: MenuItem) {
@@ -224,6 +238,26 @@ class Home : AppCompatActivity() {
             }
         }
         Timber.i("LOC : %s", googleMapsViewModel.currentLocation.value)
+    }
+
+    private fun registerImagePickerCallback() {
+        intentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            Timber.i("DX registerPickerCallback() ${readImageUri(result.resultCode, result.data).toString()}")
+                            FirebaseImageManager
+                                //.updateUserImage(loggedInViewModel.liveFirebaseUser.value!!.uid,
+                                .updateUserImage(auth.currentUser!!.uid,
+                                    readImageUri(result.resultCode, result.data),
+                                    navHeaderBinding.imageView,
+                                    true)
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 
 }

@@ -46,6 +46,8 @@
 
     <string name="action_location">Location</string>
 
+    <string name="select_profile_image">Select Profile Image</string>
+
     <!-- Sign In -->
 
     <string name="hint_emailSignIn">Email</string>

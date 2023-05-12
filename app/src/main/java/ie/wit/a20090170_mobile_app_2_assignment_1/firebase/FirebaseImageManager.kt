@@ -13,6 +13,7 @@ import ie.wit.a20090170_mobile_app_2_assignment_1.utils.customTransformation
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import com.squareup.picasso.Target
+import ie.wit.a20090170_mobile_app_2_assignment_1.models.QuestManager
 
 object FirebaseImageManager {
 
@@ -52,6 +53,7 @@ object FirebaseImageManager {
                 uploadTask.addOnSuccessListener { ut ->
                     ut.metadata!!.reference!!.downloadUrl.addOnCompleteListener { task ->
                         imageUri.value = task.result!!
+                        QuestManager.updateImage(userid, imageUri.value.toString())
                     }
                 }
             }
@@ -87,6 +89,8 @@ object FirebaseImageManager {
 
                 override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
             })
+
+        //QuestManager.updateImage(userid, imageUri.toString())
     }
 
     fun updateDefaultImage(userid: String, resource: Int, imageView: ImageView) {

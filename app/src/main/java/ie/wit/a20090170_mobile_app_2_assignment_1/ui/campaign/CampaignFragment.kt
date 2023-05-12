@@ -49,7 +49,10 @@ class CampaignFragment : Fragment(), QuestClickListener {
 
         campaignViewModel.observableQuestsList.observe(viewLifecycleOwner, Observer {
                 quests ->
-            quests?.let { render(quests as ArrayList<QuestModel>) }
+            quests?.let {
+                render(quests as ArrayList<QuestModel>)
+                checkSwipeRefresh()
+            }
         })
 
         Handler().postDelayed({
@@ -68,6 +71,8 @@ class CampaignFragment : Fragment(), QuestClickListener {
             fragBinding.searchByQuestNameText.setText("")
             campaignViewModel.load()
         }
+
+        setSwipeRefresh()
 
         val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -168,6 +173,27 @@ class CampaignFragment : Fragment(), QuestClickListener {
 
         campaignViewModel.updateQuest(quest)
     }
+
+    fun setSwipeRefresh() {
+        fragBinding.swiperefresh.setOnRefreshListener {
+            fragBinding.swiperefresh.isRefreshing = true
+            //showLoader(loader,"Downloading Donations")
+            //Retrieve Donation List again here
+
+            if(campaignViewModel.readOnly.value!!) {
+                campaignViewModel.loadAll()
+            }
+            else {
+                campaignViewModel.load()
+            }
+        }
+    }
+
+    fun checkSwipeRefresh() {
+        if (fragBinding.swiperefresh.isRefreshing)
+            fragBinding.swiperefresh.isRefreshing = false
+    }
+
 
     override fun onResume() {
         super.onResume()

@@ -80,6 +80,16 @@ object QuestManager : QuestStore {
         updateInDatabase(quest)
     }
 
+    override fun updateImage(userID: String, imageUri: String) {
+        for(quest in quests) {
+            if(quest.userId == userID) {
+                Timber.i("PFP ${imageUri}")
+                quest.profilepic = imageUri
+                updateInDatabase(quest)
+            }
+        }
+    }
+
     override fun delete(id: Long) {
         val foundQuest : QuestModel? = quests.find { it.id == id }
         quests.remove(foundQuest)
