@@ -1,7 +1,9 @@
 package ie.wit.a20090170_mobile_app_2_assignment_1.activities
 
 import android.annotation.SuppressLint
+import android.app.UiModeManager
 import android.content.Intent
+import android.content.res.Configuration
 import android.location.Location
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.*
@@ -44,6 +47,9 @@ class Home : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     lateinit var googleSignInClient: GoogleSignInClient
+
+    var isDarkMode = false
+    //var addActionBar = true
 
     private val googleMapsViewModel : GoogleMapsViewModel by viewModels()
 
@@ -187,6 +193,17 @@ class Home : AppCompatActivity() {
         val launcherIntent = Intent(this, SignInActivity::class.java)
         launcherIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         listIntentLauncher.launch(launcherIntent)
+    }
+
+    fun darkMode(item: MenuItem) {
+        isDarkMode = !isDarkMode
+
+        if(isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     private val listIntentLauncher =

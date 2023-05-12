@@ -8,12 +8,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-28dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!--
             <EditText
                 android:id="@+id/emailRegister"
                 android:layout_width="wrap_content"
@@ -27,7 +30,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleRegister" />
+                -->
 
+            <!--
             <EditText
                 android:id="@+id/passwordSignIn"
                 android:layout_width="wrap_content"
@@ -40,7 +45,8 @@
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailSignIn" />
+                app:layout_constraintTop_toBottomOf="@+id/emailSignInNewParent" />
+                -->
 
             <TextView
                 android:id="@+id/titleRegister"
@@ -66,8 +72,9 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordRegister" />
+                app:layout_constraintTop_toBottomOf="@+id/passwordRegisterNewParent" />
 
+            <!--
             <EditText
                 android:id="@+id/emailSignIn"
                 android:layout_width="wrap_content"
@@ -81,7 +88,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/SignInTitle" />
+                -->
 
+            <!--
             <EditText
                 android:id="@+id/passwordRegister"
                 android:layout_width="wrap_content"
@@ -95,6 +104,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailRegister" />
+                -->
 
             <TextView
                 android:id="@+id/SignInTitle"
@@ -123,7 +133,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.516"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordSignIn" />
+                app:layout_constraintTop_toBottomOf="@+id/passwordSignInNewParent" />
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/googlButtonSignIn"
@@ -138,6 +148,72 @@
                 app:layout_constraintHorizontal_bias="0.516"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonSignIn" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailSignInNewParent"
+                android:layout_width="238dp"
+                android:layout_height="59dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/SignInTitle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailSignInNew"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_emailSignIn" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordSignInNewParent"
+                android:layout_width="238dp"
+                android:layout_height="59dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailSignInNewParent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordSignInNew"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_passwordSignIn"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailRegisterNewParent"
+                android:layout_width="238dp"
+                android:layout_height="59dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleRegister">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailRegisterNew"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_emailSignIn" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordRegisterNewParent"
+                android:layout_width="238dp"
+                android:layout_height="59dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailRegisterNewParent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordRegisterNew"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_passwordSignIn"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

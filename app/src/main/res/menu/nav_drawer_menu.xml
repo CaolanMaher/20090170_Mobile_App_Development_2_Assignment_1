@@ -32,6 +32,16 @@
                 android:title="@string/action_send" />
         </menu>
     </item>
+    <item android:title="Dark Mode">
+        <menu>
+            <item
+                android:id="@+id/nav_dark_mode"
+                android:icon="@drawable/ic_dark_mode"
+                android:onClick="darkMode"
+                android:title="Dark Mode"
+                />
+        </menu>
+    </item>
     <item android:title="Access Control">
         <menu>
             <item

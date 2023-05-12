@@ -38,10 +38,10 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivitySignInBinding.inflate(layoutInflater)
-        binding.emailSignIn.setText("")
-        binding.passwordSignIn.setText("")
-        binding.emailRegister.setText("")
-        binding.passwordRegister.setText("")
+        binding.emailSignInNew.setText("")
+        binding.passwordSignInNew.setText("")
+        binding.emailRegisterNew.setText("")
+        binding.passwordRegisterNew.setText("")
 
         setContentView(binding.root)
 
@@ -52,15 +52,15 @@ class SignInActivity : AppCompatActivity() {
 
         binding.buttonSignIn.setOnClickListener {
             try {
-                val email = binding.emailSignIn.text.toString()
-                val password = binding.passwordSignIn.text.toString()
+                val email = binding.emailSignInNew.text.toString()
+                val password = binding.passwordSignInNew.text.toString()
                 if(email.isNotEmpty() && password.isNotEmpty()) {
                     signIn(email, password)
 
-                    binding.emailSignIn.setText("")
-                    binding.passwordSignIn.setText("")
-                    binding.emailRegister.setText("")
-                    binding.passwordRegister.setText("")
+                    binding.emailSignInNew.setText("")
+                    binding.passwordSignInNew.setText("")
+                    binding.emailRegisterNew.setText("")
+                    binding.passwordRegisterNew.setText("")
                 }
                 else {
                     Toast.makeText(baseContext, "Please fill in necessary fields",
@@ -74,15 +74,15 @@ class SignInActivity : AppCompatActivity() {
 
         binding.buttonRegister.setOnClickListener {
             try {
-                val email = binding.emailRegister.text.toString()
-                val password = binding.passwordRegister.text.toString()
+                val email = binding.emailRegisterNew.text.toString()
+                val password = binding.passwordRegisterNew.text.toString()
                 if(email.isNotEmpty() && password.isNotEmpty()) {
                     createAccount(email, password)
 
-                    binding.emailSignIn.setText("")
-                    binding.passwordSignIn.setText("")
-                    binding.emailRegister.setText("")
-                    binding.passwordRegister.setText("")
+                    binding.emailSignInNew.setText("")
+                    binding.passwordSignInNew.setText("")
+                    binding.emailRegisterNew.setText("")
+                    binding.passwordRegisterNew.setText("")
                 }
                 else {
                     Toast.makeText(baseContext, "Please fill in necessary fields",
